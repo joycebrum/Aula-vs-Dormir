@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ControleRendimento.cs" />
+    <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
+    <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
     <Compile Include="Assets\Scripts\Player_Controler.cs" />
     <Compile Include="Assets\Scripts\Seletor_de_fases.cs" />
   </ItemGroup>

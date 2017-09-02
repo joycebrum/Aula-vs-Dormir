@@ -48,6 +48,14 @@ public class ControleRendimento : MonoBehaviour {
         }
 		
 	}
+    public void Perda(float qnt)
+    {
+        QntRendimento -= qnt;
+        if (QntRendimento < 0)
+        {
+            QntRendimento = 0;
+        }
+    }
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
