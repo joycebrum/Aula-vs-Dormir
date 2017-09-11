@@ -10,19 +10,16 @@ public class ObjetosPegaveis : MonoBehaviour {
     public int voltas;
     public float velocity;
     public GameObject Player;
-    private ControleRendimento controlerend;
+
 	// Use this for initialization
 	void Start ()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         countvoltas = 0;
-        controlerend = Player.GetComponent<ControleRendimento>();
-
 	}
     public void setDirection(Vector2 directions)
     {
         direction = directions;
-        Debug.Log(direction);
     }
 	
 	// Update is called once per frame
@@ -35,12 +32,12 @@ public class ObjetosPegaveis : MonoBehaviour {
         if(collision.gameObject.tag == "Border")
         {
             countvoltas++;
-            print(countvoltas + voltas);
             direction = -1 * direction;
             if (countvoltas>= voltas)
             {
-                controlerend.Perda(perda);
-                Destroy(gameObject);
+                ControleRendimento controle = Player.GetComponent<ControleRendimento>();
+                controle.Perda(perda);
+                Destroy(gameObject);            
             }
         }
         

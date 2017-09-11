@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
     <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
     <Compile Include="Assets\Scripts\Player_Controler.cs" />
+    <Compile Include="Assets\Scripts\RendimentoBarra.cs" />
     <Compile Include="Assets\Scripts\Seletor_de_fases.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
