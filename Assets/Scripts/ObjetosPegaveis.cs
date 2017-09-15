@@ -10,6 +10,7 @@ public class ObjetosPegaveis : MonoBehaviour {
     public int voltas;
     public float velocity;
     public GameObject Player;
+    public bool naopegavel;
 
 	// Use this for initialization
 	void Start ()
@@ -35,8 +36,11 @@ public class ObjetosPegaveis : MonoBehaviour {
             direction = -1 * direction;
             if (countvoltas>= voltas)
             {
-                ControleRendimento controle = Player.GetComponent<ControleRendimento>();
-                controle.Perda(perda);
+                if (!naopegavel)
+                {
+                    ControleRendimento controle = Player.GetComponent<ControleRendimento>();
+                    controle.Perda(perda);
+                }
                 Destroy(gameObject);            
             }
         }
@@ -44,6 +48,11 @@ public class ObjetosPegaveis : MonoBehaviour {
     }
     private void OnMouseDown()
     {
+        if(naopegavel)
+        {
+            ControleRendimento controle = Player.GetComponent<ControleRendimento>();
+            controle.Perda(perda);
+        }
         Destroy(gameObject);
     }
 }
