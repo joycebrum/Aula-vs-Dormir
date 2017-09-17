@@ -12,4 +12,9 @@ public class Seletor_de_fases : MonoBehaviour {
         Debug.Log("Clicked");
         SceneManager.LoadScene(fase);
    }
+    
+    public void BackToSelection()
+    {
+        SceneManager.LoadScene("MenuDeFases");
+    }
 }

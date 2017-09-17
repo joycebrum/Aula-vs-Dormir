@@ -7,6 +7,7 @@ public class CriadorDeObjetos : MonoBehaviour {
     public Transform[] ObjetosPrefab = new Transform[1];
     private float cooldown;
     public float intervalo;
+    public int sinal;
 	// Use this for initialization
 	void Start ()
     {
@@ -36,9 +37,10 @@ public class CriadorDeObjetos : MonoBehaviour {
     public void CriaObjeto()
     {
         int position = RandomNumber(0, ObjetosPrefab.Length);
-        Vector2 direction = new Vector2(2f,0f);
+        float velx = RandomNumber(2, 5);
+        Vector2 direction = new Vector2(sinal*velx,0f);
         var objTransform = Instantiate(ObjetosPrefab[position]) as Transform;
-        objTransform.position = transform.position;
+        objTransform.position = transform.position; 
         ObjetosPegaveis script = objTransform.GetComponent<ObjetosPegaveis>();
         script.setDirection(direction);
 

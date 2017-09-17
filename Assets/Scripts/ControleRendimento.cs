@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControleRendimento : MonoBehaviour {
     public float max;
@@ -8,10 +9,11 @@ public class ControleRendimento : MonoBehaviour {
     public float time; 
     public float cooldown;
     public float perda;
-    public float ganho;
+    public static float ganho = 6;
     public static float obj;
     public static bool perder;
     public GameObject healthbar;
+    public Text UpdateGanhoButton;
 	// Use this for initialization
 	void Start () {
         current = max;
@@ -21,6 +23,7 @@ public class ControleRendimento : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        print(ganho);
         if(Input.GetButtonDown("Fire1") && current<max)
         {
 
@@ -30,7 +33,8 @@ public class ControleRendimento : MonoBehaviour {
                 current = max;
             }
         }
-		
+        float calc_health = current / max;
+        SetHealthBar(calc_health);
 	}
     public void Decrease()
     {
@@ -38,7 +42,7 @@ public class ControleRendimento : MonoBehaviour {
         {
             current -= perda;
             
-            if (perder== true) //nao ta funcionando
+            if (perder== true) 
             {
                 current -= obj;
                 perder = false;
@@ -62,4 +66,13 @@ public class ControleRendimento : MonoBehaviour {
         print(perder);
         obj = qnt;
     }
+
+    public void UpdateGanho()
+    {
+        print(ganho);
+        ganho++;
+        print(ganho);
+        //UpdateGanhoButton.text = "Ganho = " + ganho; //Como escrever isso no botão
+    }
+
 }
