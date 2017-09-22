@@ -13,7 +13,6 @@ public class ControleRendimento : MonoBehaviour {
     public static float obj;
     public static bool perder;
     public GameObject healthbar;
-    public Text UpdateGanhoButton;
 	// Use this for initialization
 	void Start () {
         current = max;
@@ -65,14 +64,6 @@ public class ControleRendimento : MonoBehaviour {
         perder = true;
         print(perder);
         obj = qnt;
-    }
-
-    public void UpdateGanho()
-    {
-        print(ganho);
-        ganho++;
-        print(ganho);
-        //UpdateGanhoButton.text = "Ganho = " + ganho; //Como escrever isso no botão
     }
 
 }
