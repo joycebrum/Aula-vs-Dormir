@@ -9,20 +9,44 @@ public class ControleRendimento : MonoBehaviour {
     public float time; 
     public float cooldown;
     public float perda;
-    public static float ganho = 6;
+
+    public static bool bebendo;//buffs
+    public static float duracao_bebendo=3;
+    private float tempobebendo;
+    public static float ganho = 6;//habilidade
     public static float obj;
     public static bool perder;
+
     public GameObject healthbar;
+    public Image script;
+    private Color inicial;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        bebendo = false;
+        tempobebendo = 0;
         current = max;
         InvokeRepeating("Decrease", time, cooldown);
+        inicial = script.color;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        print(ganho);
+        if(bebendo)
+        {
+            if (tempobebendo == 0)
+            {
+                ganho = ganho * 2;
+            }
+            tempobebendo += Time.deltaTime;
+            if(tempobebendo>=duracao_bebendo)
+            {
+                tempobebendo = 0;
+                bebendo = false;
+                ganho = ganho / 2;
+            }
+        }
         if(Input.GetButtonDown("Fire1") && current<max)
         {
 
@@ -34,6 +58,14 @@ public class ControleRendimento : MonoBehaviour {
         }
         float calc_health = current / max;
         SetHealthBar(calc_health);
+        if(calc_health<0.75)
+        {
+            script.color = new Color(1f, 0f, 0f);
+        }
+        else if(calc_health>=0.75)
+        {
+            script.color = inicial;
+        }
 	}
     public void Decrease()
     {

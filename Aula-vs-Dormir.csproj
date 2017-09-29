@@ -78,13 +78,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ButtonScript.cs" />
     <Compile Include="Assets\Scripts\ControleRendimento.cs" />
     <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
     <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
     <Compile Include="Assets\Scripts\Player_Controler.cs" />
     <Compile Include="Assets\Scripts\RendimentoBarra.cs" />
-    <Compile Include="Assets\Scripts\Seletor_de_fases.cs" />
     <Compile Include="Assets\Scripts\TextControler.cs" />
+    <Compile Include="Assets\Scripts\UpdateSceaneScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fontes\Terms of Use End User Lisence Agreement.txt" />
