@@ -7,17 +7,20 @@ public class CriadorDeObjetos : MonoBehaviour {
     public Transform[] ObjetosPrefab = new Transform[1];
     private float cooldown;
     public float intervalo;
+    public int minimo;
+    public int maximo;
     public int sinal;
 	// Use this for initialization
 	void Start ()
     {
         cooldown = RandomNumber(2, 4);
-        intervalo = RandomNumber(5, 8);
+        intervalo = RandomNumber(minimo, maximo);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        print(cooldown);
         if (cooldown > 0)
         {
             cooldown -= Time.deltaTime;
@@ -25,6 +28,7 @@ public class CriadorDeObjetos : MonoBehaviour {
         else
         {
             CriaObjeto();
+            intervalo = RandomNumber(minimo, maximo);
             cooldown = intervalo;
         }
 	}

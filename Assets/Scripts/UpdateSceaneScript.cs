@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UpdateSceaneScript : MonoBehaviour {
 
-    public static int updates=0;
+    public static int updates=3;
     public Text tempt;
     public static Text numUpdates;
     public Button[] botao;
@@ -28,13 +28,6 @@ public class UpdateSceaneScript : MonoBehaviour {
         if (updates != updatesantigo)
         {
             if (updates == 0)
-            {
-                for (int i = 0; i < botao.Length; i++)
-                {
-                    botao[i].interactable = false;
-                }
-            }
-            else
             {
                 for (int i = 0; i < botao.Length; i++)
                 {

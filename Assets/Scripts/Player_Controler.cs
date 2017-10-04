@@ -12,7 +12,7 @@ public class Player_Controler : MonoBehaviour {
     public static float num;
     public Text tempo;
     public static int quantidade_de_agua = 0;
-    public int aguatemporaria;
+    public static int LavadasPossiveis = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -22,10 +22,6 @@ public class Player_Controler : MonoBehaviour {
         int convertido = (int)leveltimeMax;
         tempo.text = convertido.ToString();
 	}
-    public void Awake()
-    {
-        aguatemporaria = quantidade_de_agua;
-    }
 
     // Update is called once per frame
     void Update ()
@@ -42,7 +38,6 @@ public class Player_Controler : MonoBehaviour {
         if (leveltime>=leveltimeMax)
         {
             num = rend.current / rend.max;
-            quantidade_de_agua = aguatemporaria;
             SceneManager.LoadScene(UpdateSceane);
         }
 	}

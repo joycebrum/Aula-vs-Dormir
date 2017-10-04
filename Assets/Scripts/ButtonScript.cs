@@ -25,6 +25,15 @@ public class ButtonScript : MonoBehaviour {
         Player_Controler.quantidade_de_agua--;
     }
 
+    public void Lavou()
+    {
+        if (Player_Controler.LavadasPossiveis > 0)
+        {
+            ControleRendimento.lavando = true;
+        }
+        Player_Controler.LavadasPossiveis--;
+    }
+
     public void LoadNextLevel(string fase)
     {
         Debug.Log(fase);
@@ -41,16 +50,48 @@ public class ButtonScript : MonoBehaviour {
     {
         if (UpdateSceaneScript.updates > 0)
         {
+            TextControler.mudou = true;
             ControleRendimento.duracao_bebendo += 0.5f;
+            UpdateSceaneScript.updates--;
+            UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
+        }
+    }
+    public void UpdateLavar()
+    {
+        if (UpdateSceaneScript.updates > 0)
+        {
+            TextControler.mudou = true;
+            ControleRendimento.duracao_lavando += 0.5f;
             UpdateSceaneScript.updates--;
             UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
         }
     }
     public void UpdateGanho()
     {
+        TextControler.mudou = true;
         if (UpdateSceaneScript.updates > 0)
         {
             ControleRendimento.ganho++;
+            UpdateSceaneScript.updates--;
+            UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
+        }
+    }
+    public void ComprarAgua()
+    {
+        TextControler.mudou = true;
+        if (UpdateSceaneScript.updates > 0)
+        {
+            Player_Controler.quantidade_de_agua++;
+            UpdateSceaneScript.updates--;
+            UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
+        }
+    }
+    public void Passesprobanheiro()
+    {
+        TextControler.mudou = true;
+        if (UpdateSceaneScript.updates > 0)
+        {
+            Player_Controler.LavadasPossiveis++;
             UpdateSceaneScript.updates--;
             UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
         }
