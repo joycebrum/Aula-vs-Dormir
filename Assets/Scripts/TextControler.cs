@@ -24,7 +24,7 @@ public class TextControler : MonoBehaviour {
         if (mudou)
         {
             texto[0].text = "Valor do Toque: " + ControleRendimento.ganho.ToString();
-            texto[1].text = "Duracao da água: " + ControleRendimento.duracao_bebendo.ToString();
+            texto[1].text = "Duracao da água: " + ControleRendimento.duracao_bebendo.ToString() + " segundos";
             texto[2].text = "Duracao lavar rosto: " + ControleRendimento.duracao_lavando.ToString() + " segundos";
             texto[3].text = "Aguas: " + Player_Controler.quantidade_de_agua.ToString();
             texto[4].text = "Passes: " + Player_Controler.LavadasPossiveis.ToString();

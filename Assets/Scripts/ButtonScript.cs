@@ -21,8 +21,9 @@ public class ButtonScript : MonoBehaviour {
         if (Player_Controler.quantidade_de_agua > 0)
         {
             ControleRendimento.bebendo = true;
+            Player_Controler.quantidade_de_agua--;
         }
-        Player_Controler.quantidade_de_agua--;
+        
     }
 
     public void Lavou()
@@ -30,8 +31,9 @@ public class ButtonScript : MonoBehaviour {
         if (Player_Controler.LavadasPossiveis > 0)
         {
             ControleRendimento.lavando = true;
+            Player_Controler.LavadasPossiveis--;
         }
-        Player_Controler.LavadasPossiveis--;
+        
     }
 
     public void LoadNextLevel(string fase)

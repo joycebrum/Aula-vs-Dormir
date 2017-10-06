@@ -43,6 +43,8 @@ public class ControleRendimento : MonoBehaviour {
         InvokeRepeating("Decrease", time, cooldown);
         inicial = script.color;
         PlayerSprite = GetComponent<SpriteRenderer>();
+        textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
+        textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
     }
 	
 	// Update is called once per frame
@@ -63,7 +65,7 @@ public class ControleRendimento : MonoBehaviour {
                 tempolavando = 0;
                 lavando = false;
                 perda = perdatemp;
-                textolavando.text = "Lavar o Rosto";
+                textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
             }
         }
         if (bebendo)
@@ -80,7 +82,7 @@ public class ControleRendimento : MonoBehaviour {
                 tempobebendo = 0;
                 bebendo = false;
                 ganho = ganho / 2;
-                textobebendo.text = "Beber água";
+                textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
             }
         }
         if (Input.GetButtonDown("Fire1") && current<max)

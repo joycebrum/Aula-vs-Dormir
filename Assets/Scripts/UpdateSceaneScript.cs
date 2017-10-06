@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UpdateSceaneScript : MonoBehaviour {
 
-    public static int updates=3;
+    public static int updates=0;
     public Text tempt;
     public static Text numUpdates;
     public Button[] botao;
