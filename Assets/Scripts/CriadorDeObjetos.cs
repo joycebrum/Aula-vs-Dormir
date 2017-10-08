@@ -10,6 +10,8 @@ public class CriadorDeObjetos : MonoBehaviour {
     public int minimo;
     public int maximo;
     public int sinal;
+    public int velxmin;
+    public int velxmax;
 	// Use this for initialization
 	void Start ()
     {
@@ -32,17 +34,24 @@ public class CriadorDeObjetos : MonoBehaviour {
             cooldown = intervalo;
         }
 	}
-    private int RandomNumber(int min, int max)
+    private float RandomNumber(int min, int max)
     {
-        System.Random random = new System.Random();
-        return random.Next(min, max);
+        float mynumber =  UnityEngine.Random.Range(min,max);
+        return mynumber;
+    }
+    private int RandomintNumber(int min, int max)
+    {
+        int mynumber = UnityEngine.Random.Range(min, max);
+        return mynumber;
     }
 
     public void CriaObjeto()
     {
-        int position = RandomNumber(0, ObjetosPrefab.Length);
+        int position = RandomintNumber(0, ObjetosPrefab.Length);
         float velx = RandomNumber(2, 5);
-        Vector2 direction = new Vector2(sinal*velx,0f);
+        float vely = RandomNumber(-1, 1);
+        vely = vely * 2;
+        Vector2 direction = new Vector2(sinal*velx,vely);
         var objTransform = Instantiate(ObjetosPrefab[position]) as Transform;
         objTransform.position = transform.position; 
         ObjetosPegaveis script = objTransform.GetComponent<ObjetosPegaveis>();

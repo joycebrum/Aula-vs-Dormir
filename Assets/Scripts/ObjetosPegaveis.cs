@@ -9,6 +9,7 @@ public class ObjetosPegaveis : MonoBehaviour {
     private int countvoltas;
     public int voltas;
     public float velocity;
+    private float time;
     public GameObject Player;
     public bool naopegavel;
 
@@ -17,6 +18,8 @@ public class ObjetosPegaveis : MonoBehaviour {
     {
         rigidbody = GetComponent<Rigidbody2D>();
         countvoltas = 0;
+        time = 0;
+
 	}
     public void setDirection(Vector2 directions)
     {
@@ -44,7 +47,11 @@ public class ObjetosPegaveis : MonoBehaviour {
                 Destroy(gameObject);            
             }
         }
-        
+        if (collision.gameObject.tag == "Upp")
+        {
+            direction.y = -1 * direction.y;
+        }
+
     }
     private void OnMouseDown()
     {
