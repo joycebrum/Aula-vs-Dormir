@@ -19,15 +19,13 @@ public class ControleRendimento : MonoBehaviour {
     private float perdatemp;//poder restaurar depois de lavar
     public Text textobebendo;
     public Text textolavando;
+    public Text Rendimento;
 
     public static float ganho = 6;//habilidade
     public static float obj;
     public static bool perder;
 
-    
-
-    public GameObject healthbar;
-    public Image script;
+    public Image content;
     private Color inicial;
     //animação de que começou a dormir
     private SpriteRenderer PlayerSprite;
@@ -41,8 +39,9 @@ public class ControleRendimento : MonoBehaviour {
         tempobebendo = 0;
         current = max;
         InvokeRepeating("Decrease", time, cooldown);
-        inicial = script.color;
+        inicial = content.color;
         PlayerSprite = GetComponent<SpriteRenderer>();
+        Rendimento.text = current.ToString() + " / " + max.ToString();
         textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
         textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
     }
@@ -98,12 +97,12 @@ public class ControleRendimento : MonoBehaviour {
         SetHealthBar(calc_health);
         if(calc_health<0.75)
         {
-            script.color = new Color(1f, 0f, 0f);
+            content.color = new Color(1f, 0f, 0f);
             PlayerSprite.sprite = dormindo;
         }
         else if(calc_health>=0.75)
         {
-            script.color = inicial;
+            content.color = inicial;
             PlayerSprite.sprite = acordado;
         }
 	}
@@ -127,9 +126,10 @@ public class ControleRendimento : MonoBehaviour {
         float calc_health = current / max;
         SetHealthBar(calc_health);
     }
-    public void SetHealthBar(float myhealth)
+    public void SetHealthBar(float calc)
     {
-        healthbar.transform.localScale = new Vector3( myhealth, healthbar.transform.localScale.y, healthbar.transform.localScale.z);
+        content.fillAmount = calc;
+        Rendimento.text = current.ToString() + " / " + max.ToString();
     }
     public void Perda(float qnt)
     {

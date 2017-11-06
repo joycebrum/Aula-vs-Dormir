@@ -49,9 +49,7 @@ public class CriadorDeObjetos : MonoBehaviour {
     {
         int position = RandomintNumber(0, ObjetosPrefab.Length);
         float velx = RandomNumber(2, 5);
-        float vely = RandomNumber(-1, 1);
-        vely = vely * 2;
-        Vector2 direction = new Vector2(sinal*velx,vely);
+        Vector2 direction = new Vector2(sinal*velx,0);
         var objTransform = Instantiate(ObjetosPrefab[position]) as Transform;
         objTransform.position = transform.position; 
         ObjetosPegaveis script = objTransform.GetComponent<ObjetosPegaveis>();
