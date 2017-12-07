@@ -10,6 +10,8 @@ public class ControleRendimento : MonoBehaviour {
     public float cooldown;
     public float perda;
 
+    public static bool fim;
+
     public static bool bebendo;//buffs
     public static bool lavando;
     public static float duracao_bebendo=3;
@@ -35,6 +37,7 @@ public class ControleRendimento : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        fim = false;
         bebendo = false;
         tempobebendo = 0;
         current = max;
@@ -49,66 +52,69 @@ public class ControleRendimento : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(lavando)
+        if (!fim)
         {
-            if (tempolavando == 0)
+            if (lavando)
             {
-                perdatemp = perda;
-                perda = 0;
+                if (tempolavando == 0)
+                {
+                    perdatemp = perda;
+                    perda = 0;
+                }
+                tempolavando += Time.deltaTime;
+                int temp = (int)(duracao_lavando - tempolavando);
+                textolavando.text = temp.ToString();
+                if (tempolavando >= duracao_lavando)
+                {
+                    tempolavando = 0;
+                    lavando = false;
+                    perda = perdatemp;
+                    textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
+                }
             }
-            tempolavando += Time.deltaTime;
-            int temp = (int)(duracao_lavando - tempolavando);
-            textolavando.text = temp.ToString();
-            if(tempolavando>=duracao_lavando)
+            if (bebendo)
             {
-                tempolavando = 0;
-                lavando = false;
-                perda = perdatemp;
-                textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
+                if (tempobebendo == 0)
+                {
+                    ganho = ganho * 2;
+                }
+                tempobebendo += Time.deltaTime;
+                int temp = (int)(duracao_bebendo - tempobebendo);
+                textobebendo.text = temp.ToString();
+                if (tempobebendo >= duracao_bebendo)
+                {
+                    tempobebendo = 0;
+                    bebendo = false;
+                    ganho = ganho / 2;
+                    textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
+                }
             }
-        }
-        if (bebendo)
-        {
-            if (tempobebendo == 0)
+            if (Input.GetButtonDown("Fire1") && current < max)
             {
-                ganho = ganho * 2;
-            }
-            tempobebendo += Time.deltaTime;
-            int temp = (int)(duracao_bebendo - tempobebendo);
-            textobebendo.text = temp.ToString();
-            if (tempobebendo >= duracao_bebendo)
-            {
-                tempobebendo = 0;
-                bebendo = false;
-                ganho = ganho / 2;
-                textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
-            }
-        }
-        if (Input.GetButtonDown("Fire1") && current<max)
-        {
 
-            current += ganho;
-            if(current>max)
-            {
-                current = max;
+                current += ganho;
+                if (current > max)
+                {
+                    current = max;
+                }
             }
-        }
-        float calc_health = current / max;
-        SetHealthBar(calc_health);
-        if(calc_health<0.75)
-        {
-            content.color = new Color(1f, 0f, 0f);
-            PlayerSprite.sprite = dormindo;
-        }
-        else if(calc_health>=0.75)
-        {
-            content.color = inicial;
-            PlayerSprite.sprite = acordado;
+            float calc_health = current / max;
+            SetHealthBar(calc_health);
+            if (calc_health < 0.75)
+            {
+                content.color = new Color(1f, 0f, 0f);
+                PlayerSprite.sprite = dormindo;
+            }
+            else if (calc_health >= 0.75)
+            {
+                content.color = inicial;
+                PlayerSprite.sprite = acordado;
+            }
         }
 	}
     public void Decrease()
     {
-        if (current > 0)
+        if (current > 0 && !fim)
         {
             current -= perda;
             

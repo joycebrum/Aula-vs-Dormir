@@ -98,4 +98,8 @@ public class ButtonScript : MonoBehaviour {
             UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
         }
     }
+    public void tutorial()
+    {
+
+    }
 }

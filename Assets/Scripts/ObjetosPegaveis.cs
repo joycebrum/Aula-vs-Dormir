@@ -12,7 +12,7 @@ public class ObjetosPegaveis : MonoBehaviour {
     private float time;
     public GameObject Player;
     public bool naopegavel;
-
+    public static bool fim;
 	// Use this for initialization
 	void Start ()
     {
@@ -55,11 +55,14 @@ public class ObjetosPegaveis : MonoBehaviour {
     }
     private void OnMouseDown()
     {
-        if(naopegavel)
+        if (!fim)
         {
-            ControleRendimento controle = Player.GetComponent<ControleRendimento>();
-            controle.Perda(perda);
+            if (naopegavel)
+            {
+                ControleRendimento controle = Player.GetComponent<ControleRendimento>();
+                controle.Perda(perda);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }
