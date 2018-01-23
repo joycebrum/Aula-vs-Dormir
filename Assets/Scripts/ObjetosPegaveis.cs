@@ -1,25 +1,27 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class ObjetosPegaveis : MonoBehaviour {
     public float perda;
     private Vector2 direction;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbodyob;
     private int countvoltas;
     public int voltas;
     public float velocity;
-    private float time;
     public GameObject Player;
     public bool naopegavel;
+
+    public bool cafe;
+    public float duracao;
+
     public static bool fim;
 	// Use this for initialization
 	void Start ()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbodyob = GetComponent<Rigidbody2D>();
         countvoltas = 0;
-        time = 0;
-
 	}
     public void setDirection(Vector2 directions)
     {
@@ -29,7 +31,18 @@ public class ObjetosPegaveis : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        rigidbody.MovePosition(rigidbody.position + direction * Time.deltaTime * velocity);
+        if(cafe)
+        {
+            if(ControleRendimento.cafeEfeito)
+            {
+                Destroy(gameObject);
+            }
+            if(ControleRendimento.bebendo)
+            {
+                Destroy(gameObject);
+            }
+        }
+        rigidbodyob.MovePosition(rigidbodyob.position + direction * Time.deltaTime * velocity);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -39,7 +52,7 @@ public class ObjetosPegaveis : MonoBehaviour {
             direction = -1 * direction;
             if (countvoltas>= voltas)
             {
-                if (!naopegavel)
+                if (!naopegavel && !cafe)
                 {
                     ControleRendimento controle = Player.GetComponent<ControleRendimento>();
                     controle.Perda(perda);
@@ -47,20 +60,26 @@ public class ObjetosPegaveis : MonoBehaviour {
                 Destroy(gameObject);            
             }
         }
-        if (collision.gameObject.tag == "Upp")
+       /* if (collision.gameObject.tag == "Upp")
         {
             direction.y = -1 * direction.y;
-        }
+        }*/
 
     }
     private void OnMouseDown()
     {
         if (!fim)
         {
+            ControleRendimento controle = Player.GetComponent<ControleRendimento>();
             if (naopegavel)
             {
-                ControleRendimento controle = Player.GetComponent<ControleRendimento>();
                 controle.Perda(perda);
+            }
+            if(cafe && !ControleRendimento.bebendo)
+            {
+                ControleRendimento.timeCafe = duracao;
+                ControleRendimento.cafeEfeito = true;
+                ControleRendimento.valorCafe = perda;
             }
             Destroy(gameObject);
         }

@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\ButtonScript.cs" />
     <Compile Include="Assets\Scripts\ControleRendimento.cs" />
     <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
+    <Compile Include="Assets\Scripts\HistoryScript.cs" />
     <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
     <Compile Include="Assets\Scripts\Player_Controler.cs" />
     <Compile Include="Assets\Scripts\RendimentoBarra.cs" />

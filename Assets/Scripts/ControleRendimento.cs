@@ -12,6 +12,19 @@ public class ControleRendimento : MonoBehaviour {
 
     public static bool fim;
 
+    //variaveis para efeito de cafe
+    public Button botaoDaAgua;
+    public Button botaoDoBanheiro;
+    private bool EstadoAntigoAgua;
+    private float ganhoAntigo;
+    public static bool cafeEfeito;
+    private bool efeitoCafe;
+    private int countcafe;
+    private float timeCurrentCafe;
+    public static float valorCafe;
+    public static float timeCafe;
+    public Text textocafe;
+
     public static bool bebendo;//buffs
     public static bool lavando;
     public static float duracao_bebendo=3;
@@ -29,6 +42,7 @@ public class ControleRendimento : MonoBehaviour {
 
     public Image content;
     private Color inicial;
+
     //animação de que começou a dormir
     private SpriteRenderer PlayerSprite;
     public Sprite dormindo;
@@ -37,6 +51,16 @@ public class ControleRendimento : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        //salva o ganho para restaurá-lo
+        ganhoAntigo = ganho;
+
+        //inicialização das variaveis do efeito cafe
+        countcafe = 1;
+        cafeEfeito = false;
+        timeCurrentCafe = 0;
+        efeitoCafe = false;
+        textocafe.text = (countcafe-1) + " cafés tomados";
+
         fim = false;
         bebendo = false;
         tempobebendo = 0;
@@ -48,16 +72,51 @@ public class ControleRendimento : MonoBehaviour {
         textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
         textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
     }
-	
-	// Update is called once per frame
-	void Update ()
+   
+    // Update is called once per frame
+    void Update ()
     {
-        if (!fim)
+        if (!fim && !Player_Controler.popupActive)
         {
+            if(cafeEfeito)
+            {
+                if(timeCurrentCafe==0)
+                {
+                    EstadoAntigoAgua = botaoDaAgua.interactable;
+                    botaoDaAgua.interactable = false;
+                    ganho += valorCafe;
+                }
+                timeCurrentCafe += Time.deltaTime;
+                if(!efeitoCafe)
+                {
+                    SetCafeText(timeCurrentCafe + " de " + timeCafe);
+                }
+                if (timeCurrentCafe >= timeCafe && !efeitoCafe)
+                {
+                    ganho -= valorCafe;
+                    ganho = ganho - valorCafe/2;
+                    SetCafeText("EFEITO COLATERAL GANHO REDUZIDO PARA " + ganho);
+                    efeitoCafe = true;
+                }
+                else
+                {
+                    if (timeCurrentCafe >= timeCafe + timeCafe * countcafe / 4)//acabou o efeito negativo
+                    {
+                        cafeEfeito = false;
+                        efeitoCafe = false;
+                        timeCurrentCafe = 0;
+                        countcafe++;
+                        textocafe.text = (countcafe - 1) + " cafés tomados";
+                        ganho = ganho + valorCafe / 2;
+                        botaoDaAgua.interactable = EstadoAntigoAgua;
+                    }
+                }
+            }
             if (lavando)
             {
-                if (tempolavando == 0)
+                if (tempolavando == 0)//primeira vez que entra no if
                 {
+                    botaoDoBanheiro.interactable = false;
                     perdatemp = perda;
                     perda = 0;
                 }
@@ -70,12 +129,17 @@ public class ControleRendimento : MonoBehaviour {
                     lavando = false;
                     perda = perdatemp;
                     textolavando.text = Player_Controler.LavadasPossiveis.ToString() + " passes";
+                    if(Player_Controler.LavadasPossiveis>0)
+                    {
+                        botaoDoBanheiro.interactable = true;
+                    }
                 }
             }
             if (bebendo)
             {
-                if (tempobebendo == 0)
+                if (tempobebendo == 0)//primeira vez que entra no if
                 {
+                    botaoDaAgua.interactable = false;
                     ganho = ganho * 2;
                 }
                 tempobebendo += Time.deltaTime;
@@ -87,6 +151,10 @@ public class ControleRendimento : MonoBehaviour {
                     bebendo = false;
                     ganho = ganho / 2;
                     textobebendo.text = Player_Controler.quantidade_de_agua.ToString() + " passes";
+                    if (Player_Controler.quantidade_de_agua > 0)
+                    {
+                        botaoDaAgua.interactable = true;
+                    }
                 }
             }
             if (Input.GetButtonDown("Fire1") && current < max)
@@ -111,10 +179,14 @@ public class ControleRendimento : MonoBehaviour {
                 PlayerSprite.sprite = acordado;
             }
         }
+        else
+        {
+            ganho = ganhoAntigo;
+        }
 	}
     public void Decrease()
     {
-        if (current > 0 && !fim)
+        if (current > 0 && !fim && !Player_Controler.popupActive)
         {
             current -= perda;
             
@@ -141,6 +213,11 @@ public class ControleRendimento : MonoBehaviour {
     {
         perder = true;
         obj = qnt;
+    }
+
+    public void SetCafeText (string texto)
+    {
+        textocafe.text = texto;
     }
 
 }

@@ -18,7 +18,7 @@ public class ButtonScript : MonoBehaviour {
 
     public void Bebeu()
     {
-        if (Player_Controler.quantidade_de_agua > 0)
+        if (Player_Controler.quantidade_de_agua > 0) //so pode beber agua se nao beber cafe
         {
             ControleRendimento.bebendo = true;
             Player_Controler.quantidade_de_agua--;
@@ -36,17 +36,23 @@ public class ButtonScript : MonoBehaviour {
         
     }
 
-    public void LoadNextLevel(string fase)
+    public void LoadNextLevel(int fase)
     {
-        Debug.Log(fase);
-        SceneManager.LoadScene(fase);
+        HistoryScript.hfase = fase;
+        string bas = "" + fase;
+        Debug.Log(bas);
+        SceneManager.LoadScene("Historia");
+        Debug.Log("carregou");
     }
 
     public void BackToSelection()
     {
         SceneManager.LoadScene("MenuDeFases");
     }
-
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
     public void UpdateAgua()
     {
@@ -98,8 +104,8 @@ public class ButtonScript : MonoBehaviour {
             UpdateSceaneScript.numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
         }
     }
-    public void tutorial()
+    public void Tutorial()
     {
-
+        SceneManager.LoadScene("Tutorial");
     }
 }
