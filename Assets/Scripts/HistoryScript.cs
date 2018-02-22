@@ -43,7 +43,7 @@ public class HistoryScript : MonoBehaviour {
         if (Input.GetButtonDown("Fire1"))
         {
             //SceneManager.LoadScene(proxfase);
-            SceneManager.LoadScene("Prototype");//temporariamenta so para a build
+            SceneManager.LoadScene("Level");//temporariamenta so para a build
         }
 	}
 }

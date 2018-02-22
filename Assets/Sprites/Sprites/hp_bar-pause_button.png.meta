@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6ea189ef2bffce846a88a12cccc271e5
-timeCreated: 1508166827
+timeCreated: 1519302694
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -32,7 +32,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -85,8 +85,8 @@ TextureImporter:
         width: 139
         height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 56, y: 0, z: 30, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -99,7 +99,7 @@ TextureImporter:
         width: 124
         height: 97
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

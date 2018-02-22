@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c2bd51bd316e7e64cb14d13b0dd23cb8
+timeCreated: 1519309995
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 'Back to School '
+  fontNames:
+  - 'Back to School '
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
