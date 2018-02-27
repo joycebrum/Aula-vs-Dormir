@@ -115,7 +115,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 05448e1784b3ead1fd29746780502bb5 Assembly-CSharp.dll:.FlyingObjects
-5a5526df77011baab3c696c808f0449d Assembly-CSharp.dll:.PlayerController
+71836968add162b3eb79093d1764ebad Assembly-CSharp.dll:.PlayerController
 1bb21f60b364a062774241d740876ebc Assembly-CSharp.dll:.ObjectCreator
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -131,7 +131,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 3f32f08a64daf40b09ed864d96fe3840 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransform
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
-369dd501ca27aafc0b246a78b47a72a4 Assembly-CSharp.dll:.UpdateSceaneScript
+f2c8224d11844d076380b0db55629b17 Assembly-CSharp.dll:.UpdateSceaneScript
 24982d23ee0ae7113893b1f347329ef0 Assembly-CSharp.dll:.Player_Controler
 5a35d5b94055acf66f01869f65b7d8a6 Assembly-CSharp.dll:.Basics
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
@@ -146,9 +146,9 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 19196a12c0f0ccd060e3b71cb240710d Assembly-CSharp.dll:.CriadorDeObjetos
-33b28d1f372330d77025164f0216a6e4 Assembly-CSharp.dll:.ButtonScript
 16b72d5716fc325a1507ab5da1bf44cd Assembly-CSharp.dll:.HistoryScript
 f4095d5d5b3f930b87710bf7aaf97ee3 Assembly-CSharp.dll:.ObjetosPegaveis
 5a328b902cb3d087e67573fa5c1c9e87 Assembly-CSharp.dll:.BadObjects
 79f867f4352fdb74055ab1bd48ebdc5f Assembly-CSharp.dll:.ControleRendimento
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.RendimentoBarra
+7d26c3c53aad45ebf76cea7a3171dc4f Assembly-CSharp.dll:.ButtonManagerScript

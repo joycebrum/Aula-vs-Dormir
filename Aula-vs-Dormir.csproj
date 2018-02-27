@@ -76,12 +76,36 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ButtonScript.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
     <Compile Include="Assets\Scripts\ControleRendimento.cs" />
     <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
     <Compile Include="Assets\Scripts\HistoryScript.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\BadObjects.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\ButtonManagerScript.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\FlyingObjects.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\GoodObjects.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\Menu\MenuButtons.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\ObjectCreator.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\LevelData.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\PlayerAttributes.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\TouchArea.cs" />
     <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
     <Compile Include="Assets\Scripts\Player_Controler.cs" />
     <Compile Include="Assets\Scripts\RendimentoBarra.cs" />
@@ -89,6 +113,12 @@
     <Compile Include="Assets\Scripts\UpdateSceaneScript.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\Fontes\Terms of Use End User Lisence Agreement.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

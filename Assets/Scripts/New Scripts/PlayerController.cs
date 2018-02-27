@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 
     public PlayerAttributes playerAttributes;
     [SerializeField] private int rendimento;
+    [SerializeField] private int rendMinimo = 75;
 
     [Header("Elementos da UI")]
     [SerializeField] private Image rendimentoImg;
@@ -25,10 +26,18 @@ public class PlayerController : MonoBehaviour {
     }
     public void PerderRendimento(int perda = 1){
         rendimento -= perda;
+        if(rendimento<0)
+        {
+            rendimento = 0;
+        }
         UpdateRendimentoUI();
     }
     public void GanharRendimento(int ganho = 1){
         rendimento += ganho;
+        if(rendimento > 100)
+        {
+            rendimento = 100;
+        }
         UpdateRendimentoUI();
     }
     public void UsarBanheiro(){
@@ -65,6 +74,10 @@ public class PlayerController : MonoBehaviour {
         while(lManager.tempoRestante > 0){
             PerderRendimento();
             yield return new WaitForSeconds(0.1f);
+        }
+        if(rendimento>rendMinimo)
+        {
+            UpdateSceaneScript.updates++;
         }
     }
 }

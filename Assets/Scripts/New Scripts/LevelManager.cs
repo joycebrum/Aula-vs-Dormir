@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -44,6 +45,7 @@ public class LevelManager : MonoBehaviour {
 		endText.gameObject.SetActive(true);
 		yield return new WaitForSeconds(0.5f);
 		transition.GetComponent<Animator>().Play("transition_on");
+        SceneManager.LoadScene("UpdateScene");
 	}
 	private IEnumerator Timer(){
 		while(tempoRestante>0){
