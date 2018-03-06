@@ -10,10 +10,15 @@ public class LevelManager : MonoBehaviour {
 
 	[Header("Configurações do Level")]
 	public LevelData levelData;
+	public List<string> levelDescription;
 
 	[Header("Elementos da UI")]
+	public GameObject ui;
 	[SerializeField] private Text timeText;
 	[SerializeField] private Text coffeeText;
+	
+	[SerializeField] private Image tutorialText;
+
 	[SerializeField] private Image beginText;
 	[SerializeField] private Image endText;
 	[SerializeField] private Image transition;
@@ -36,14 +41,14 @@ public class LevelManager : MonoBehaviour {
 	private Coroutine InitializeLoop(){
 		Coroutine l;
 		switch(levelData.levelType){
+			case LevelType.MATHMATIC:
+				l = StartCoroutine(MathLoop());
+				break;
 			case LevelType.HISTORY:
 				l = StartCoroutine(HistoryLoop());
 				break;
 			case LevelType.SCIENCE:
 				l = StartCoroutine(ScienceLoop());
-				break;
-			case LevelType.MATHMATIC:
-				l = StartCoroutine(MathLoop());
 				break;
 			default:
 				l = StartCoroutine(MathLoop());
@@ -52,12 +57,14 @@ public class LevelManager : MonoBehaviour {
 		return l;
 	}
 	private IEnumerator ScienceLoop(){
+		ui.SetActive(false);
 		transition.GetComponent<Animator>().Play("transition_off");
-		yield return new WaitForSeconds(0.5f);
+		yield return Tutorial(levelDescription[(int)levelData.levelType]);
 		beginText.gameObject.SetActive(true);
+		yield return new WaitForSeconds(0.5f);
 		timer = StartCoroutine(Timer());
 		yield return new WaitForSeconds(0.5f);
-
+		ui.SetActive(true);
 		while(tempoRestante > 0){
 			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
 			yield return new WaitForSeconds(time);
@@ -71,15 +78,17 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene("UpdateScene");
 	}
 	private IEnumerator MathLoop(){
+		ui.SetActive(false);
 		transition.GetComponent<Animator>().Play("transition_off");
-		yield return new WaitForSeconds(0.5f);
+		yield return Tutorial(levelDescription[(int)levelData.levelType]);
 		beginText.gameObject.SetActive(true);
+		yield return new WaitForSeconds(0.5f);
 
 		tempoRestante = 60;
 		timer = StartCoroutine( Timer() );
 
 		playerController.rendimento = 0;
-
+		ui.SetActive(true);
 		while(tempoRestante > 0 && playerController.rendimento < target){
 			print(playerController.rendimento);
 			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
@@ -99,18 +108,19 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene("UpdateScene");
 	}
 	private IEnumerator HistoryLoop(){
+		ui.SetActive(false);
 		transition.GetComponent<Animator>().Play("transition_off");
-		yield return new WaitForSeconds(0.5f);
+		yield return Tutorial(levelDescription[(int)levelData.levelType]);
 		beginText.gameObject.SetActive(true);
+		yield return new WaitForSeconds(0.5f);
 
 		playerController.rendimento = 50;
 		tempoRestante = 60;
 		timer = StartCoroutine( Timer() );
 
 		touchArea.SetActive(false);
-
+		ui.SetActive(true);
 		while(tempoRestante > 0 && playerController.rendimento > 0){
-			print(playerController.rendimento);
 			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
 			yield return new WaitForSeconds(time);
 			int i = Random.Range(0,criadoresObj.Count);
@@ -146,5 +156,11 @@ public class LevelManager : MonoBehaviour {
 			Destroy(fo.gameObject,0.1f);
 			Instantiate(explosion,fo.transform.position,Quaternion.identity);
 		}
+	}
+	private IEnumerator Tutorial(string text){
+		tutorialText.gameObject.SetActive(true);
+		tutorialText.transform.GetChild(0).GetComponent<Text>().text = text;
+		yield return new WaitForSeconds(2f);
+		tutorialText.gameObject.SetActive(false);
 	}
 }
