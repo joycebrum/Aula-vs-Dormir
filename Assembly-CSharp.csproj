@@ -53,19 +53,22 @@
   <ItemGroup>
      <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
      <Compile Include="Assets\Demigiant\DOTween\Examples\Sequences.cs" />
-     <Compile Include="Assets\Scripts\ButtonScript.cs" />
      <Compile Include="Assets\Scripts\ControleRendimento.cs" />
      <Compile Include="Assets\Scripts\CriadorDeObjetos.cs" />
      <Compile Include="Assets\Scripts\HistoryScript.cs" />
      <Compile Include="Assets\Scripts\New Scripts\BadObjects.cs" />
+     <Compile Include="Assets\Scripts\New Scripts\ButtonManagerScript.cs" />
      <Compile Include="Assets\Scripts\New Scripts\FlyingObjects.cs" />
      <Compile Include="Assets\Scripts\New Scripts\GoodObjects.cs" />
      <Compile Include="Assets\Scripts\New Scripts\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\New Scripts\Menu\LevelStructureManager.cs" />
      <Compile Include="Assets\Scripts\New Scripts\Menu\MenuButtons.cs" />
      <Compile Include="Assets\Scripts\New Scripts\ObjectCreator.cs" />
      <Compile Include="Assets\Scripts\New Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\LevelData.cs" />
      <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\PlayerAttributes.cs" />
+     <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\PlayerSave.cs" />
+     <Compile Include="Assets\Scripts\New Scripts\ScriptableObjects\SemesterOverview.cs" />
      <Compile Include="Assets\Scripts\New Scripts\TouchArea.cs" />
      <Compile Include="Assets\Scripts\ObjetosPegaveis.cs" />
      <Compile Include="Assets\Scripts\Player_Controler.cs" />

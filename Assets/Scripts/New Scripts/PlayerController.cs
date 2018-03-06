@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
     public PlayerAttributes playerAttributes;
-    [SerializeField] private int rendimento;
+    public int rendimento;
     [SerializeField] private int rendMinimo = 75;
 
     [Header("Elementos da UI")]

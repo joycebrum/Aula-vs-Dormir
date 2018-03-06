@@ -5,10 +5,13 @@ using UnityEngine;
 public class GoodObjects : MonoBehaviour {
 
 	private PlayerController playerController;
+	private LevelManager levelManager;
+
 	[SerializeField] private GameObject explosion;
 	[SerializeField] private GameObject plus;
 
 	private void Start(){
+		levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 		playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
 	}
 	private void OnTriggerEnter2D(Collider2D other){
@@ -22,6 +25,9 @@ public class GoodObjects : MonoBehaviour {
 		var go = Instantiate(plus,transform.position,Quaternion.identity);
 		Destroy(go,1f);
 		StartCoroutine( DecreaseScaleThenDie() );
+		if(levelManager.levelData.levelType == LevelType.HISTORY){
+			playerController.GanharRendimento(GetComponent<FlyingObjects>().damage/4);
+		}
 	}
 	private IEnumerator DecreaseScaleThenDie(){
 		Destroy(GetComponent<FlyingObjects>());
