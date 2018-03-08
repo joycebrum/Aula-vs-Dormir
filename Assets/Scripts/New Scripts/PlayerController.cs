@@ -16,9 +16,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Text bathroomSkillText;
     [SerializeField] private Image waterSkillImg;
     [SerializeField] private Text waterSkillText;
+    [SerializeField] private List<Sprite> mySpriteList;
+    [SerializeField] private SpriteRenderer PlayerSprite;
 
 	private void Start(){
         rendimento = playerAttributes.rendimentoInicial;
+        PlayerSprite = GameObject.Find("Player").GetComponent<SpriteRenderer>();
         StartCoroutine( RendimentoLoop() );
         UpdateRendimentoUI();
         UpdateSkillUI(bathroomSkillText,playerAttributes.passesBanheiro);
@@ -34,9 +37,9 @@ public class PlayerController : MonoBehaviour {
     }
     public void GanharRendimento(int ganho = 1){
         rendimento += ganho;
-        if(rendimento > 100)
+        if(rendimento > playerAttributes.rendimentoMaximo)
         {
-            rendimento = 100;
+            rendimento = playerAttributes.rendimentoMaximo;
         }
         UpdateRendimentoUI();
     }
@@ -66,8 +69,29 @@ public class PlayerController : MonoBehaviour {
         skillText.text = usosRestantes.ToString();
     }
     private void UpdateRendimentoUI(){
-        rendimentoImg.fillAmount = (float)rendimento/playerAttributes.rendimentoInicial;
+        float numberRend = (float)rendimento / playerAttributes.rendimentoMaximo;
+        rendimentoImg.fillAmount = numberRend; //valor entre 0 e 1
         rendimentoText.text = rendimento.ToString();
+        if(numberRend>0.8)
+        {
+            PlayerSprite.sprite = mySpriteList[0];
+        }
+        else if(numberRend>0.6)
+        {
+            PlayerSprite.sprite = mySpriteList[1];
+        }
+        else if(numberRend>0.4)
+        {
+            PlayerSprite.sprite = mySpriteList[2];
+        }
+        else if(numberRend>0.2)
+        {
+            PlayerSprite.sprite = mySpriteList[3];
+        }
+        else
+        {
+            PlayerSprite.sprite = mySpriteList[4];
+        }
     }
     private IEnumerator RendimentoLoop(){
         var lManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -80,4 +104,14 @@ public class PlayerController : MonoBehaviour {
             UpdateSceaneScript.updates++;
         }
     }
+    /*private IEnumerator AtualizaSpritePlayer()
+    {
+        var lManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        while (lManager.tempoRestante > 0)
+        {
+            if()
+            yield return new WaitForEndOfFrame();
+        }
+        //Acorda o Player
+    }*/
 }

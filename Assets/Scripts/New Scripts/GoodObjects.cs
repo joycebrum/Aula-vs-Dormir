@@ -9,9 +9,11 @@ public class GoodObjects : MonoBehaviour {
 
 	[SerializeField] private GameObject explosion;
 	[SerializeField] private GameObject plus;
+    private AudioSource goodAudio;
 
 	private void Start(){
-		levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        goodAudio = GetComponent<AudioSource>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 		playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
 	}
 	private void OnTriggerEnter2D(Collider2D other){
@@ -22,6 +24,7 @@ public class GoodObjects : MonoBehaviour {
 		}
 	}
 	private void OnMouseDown(){
+        goodAudio.Play();
 		var go = Instantiate(plus,transform.position,Quaternion.identity);
 		Destroy(go,1f);
 		StartCoroutine( DecreaseScaleThenDie() );

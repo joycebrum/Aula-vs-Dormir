@@ -6,12 +6,15 @@ public class BadObjects : MonoBehaviour {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject badClick;
     [SerializeField] private GameObject wrong;
+    private AudioSource wrongAudio;
     public int damage;
 
     private void Start(){
+        wrongAudio = GetComponent<AudioSource>();
         playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
     }
     private void OnMouseDown(){
+        wrongAudio.Play();
         var g = Instantiate(wrong,transform.position,Quaternion.Euler(0,0,45));
 		Destroy(g,1f);
 

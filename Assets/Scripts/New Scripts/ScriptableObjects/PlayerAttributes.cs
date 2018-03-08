@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerAttributes : ScriptableObject {
 	[Header("Atributos")]
 	public int rendimentoInicial;
+    public int rendimentoMaximo;
 	public int ganhoPorToque;
 
 	public float cooldownBanheiro;
