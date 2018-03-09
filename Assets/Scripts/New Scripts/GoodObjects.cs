@@ -28,7 +28,7 @@ public class GoodObjects : MonoBehaviour {
 		var go = Instantiate(plus,transform.position,Quaternion.identity);
 		Destroy(go,1f);
 		StartCoroutine( DecreaseScaleThenDie() );
-		if(levelManager.levelData.levelType == LevelType.HISTORY){
+		if(levelManager.level.levelType == LevelType.HISTORY){
 			playerController.GanharRendimento(GetComponent<FlyingObjects>().damage/4);
 		}
 	}

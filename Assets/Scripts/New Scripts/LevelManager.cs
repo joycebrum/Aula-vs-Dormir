@@ -3,164 +3,173 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class LevelManager : MonoBehaviour {
+    [Header("Level")]
+    public LevelData level;
+    [SerializeField] private List<ObjectCreator> criadoresObj;
 
-	[SerializeField] private List<ObjectCreator> criadoresObj;
+    [Header("Elementos da UI")]
+    public GameObject uiElements;
+    [SerializeField] private Text timeText;
+    [SerializeField] private Text coffeeText;
 
-	[Header("Configurações do Level")]
-	public LevelData levelData;
-	public List<string> levelDescription;
+    [SerializeField] private Image tutorialText;
 
-	[Header("Elementos da UI")]
-	public GameObject ui;
-	[SerializeField] private Text timeText;
-	[SerializeField] private Text coffeeText;
-	
-	[SerializeField] private Image tutorialText;
+    [SerializeField] private Image beginText;
+    [SerializeField] private Image endText;
+    [SerializeField] private Image transition;
 
-	[SerializeField] private Image beginText;
-	[SerializeField] private Image endText;
-	[SerializeField] private Image transition;
+    private Coroutine levelLoop;
+    private Coroutine timer;
 
-	public float tempoRestante;
-	private Coroutine levelLoop;
-	private Coroutine timer;
+    public float initTime;
+    public float tempoRestante;
+    public float currentTime = 0;
+    public int target;
 
-	private int target = 100;
+    private bool canCreate = true;
 
-	[SerializeField] private GameObject explosion;
-	[SerializeField] private GameObject touchArea;
-	private PlayerController playerController;
+    [SerializeField] private GameObject explosion;
+    [SerializeField] private GameObject touchArea;
+    [SerializeField] private PlayerController playerController;
 
-	private void Start(){
-		playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
-		tempoRestante = levelData.duracao;
-		InitializeLoop();
-	}
-	private Coroutine InitializeLoop(){
-		Coroutine l;
-		switch(levelData.levelType){
-			case LevelType.MATHMATIC:
-				l = StartCoroutine(MathLoop());
-				break;
-			case LevelType.HISTORY:
-				l = StartCoroutine(HistoryLoop());
-				break;
-			case LevelType.SCIENCE:
-				l = StartCoroutine(ScienceLoop());
-				break;
-			default:
-				l = StartCoroutine(MathLoop());
-				break;
-		}
-		return l;
-	}
-	private IEnumerator ScienceLoop(){
-		ui.SetActive(false);
-		transition.GetComponent<Animator>().Play("transition_off");
-		yield return Tutorial(levelDescription[(int)levelData.levelType]);
-		beginText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-		timer = StartCoroutine(Timer());
-		yield return new WaitForSeconds(0.5f);
-		ui.SetActive(true);
-		while(tempoRestante > 0){
-			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
-			yield return new WaitForSeconds(time);
-			int i = Random.Range(0,criadoresObj.Count);
-			criadoresObj[i].CriaObjeto();
-		}
-		FinishObjects();
-		endText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-		transition.GetComponent<Animator>().Play("transition_on");
-        SceneManager.LoadScene("UpdateScene");
-	}
-	private IEnumerator MathLoop(){
-		ui.SetActive(false);
-		transition.GetComponent<Animator>().Play("transition_off");
-		yield return Tutorial(levelDescription[(int)levelData.levelType]);
-		beginText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
+    private void Start()
+    {
+        StartCoroutine(LevelLoop());
+    }
+    public void InitLevel(LevelData lvl)
+    {
+        level = lvl;
+        InitializeLevelValues();
+    }
+    private IEnumerator LevelLoop()
+    {
+        touchArea.transform.DOScaleY(0, 0);
+        uiElements.transform.DOScaleY(5, 0);
 
-		tempoRestante = 60;
-		timer = StartCoroutine( Timer() );
-
-		playerController.rendimento = 0;
-		ui.SetActive(true);
-		while(tempoRestante > 0 && playerController.rendimento < target){
-			print(playerController.rendimento);
-			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
-			yield return new WaitForSeconds(time);
-			int i = Random.Range(0,criadoresObj.Count);
-			criadoresObj[i].CriaObjeto();
-		}
-		if(playerController.rendimento >= 0 && tempoRestante > 0){
-			print("ganhou");
-		}else if(tempoRestante > 0){
-			print("perdeu");
-		}
-		FinishObjects();
-		endText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-		transition.GetComponent<Animator>().Play("transition_on");
-        SceneManager.LoadScene("UpdateScene");
-	}
-	private IEnumerator HistoryLoop(){
-		ui.SetActive(false);
-		transition.GetComponent<Animator>().Play("transition_off");
-		yield return Tutorial(levelDescription[(int)levelData.levelType]);
-		beginText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-
-		playerController.rendimento = 50;
-		tempoRestante = 60;
-		timer = StartCoroutine( Timer() );
-
-		touchArea.SetActive(false);
-		ui.SetActive(true);
-		while(tempoRestante > 0 && playerController.rendimento > 0){
-			float time = Random.Range(levelData.intervaloTempo[0],levelData.intervaloTempo[1]);
-			yield return new WaitForSeconds(time);
-			int i = Random.Range(0,criadoresObj.Count);
-			criadoresObj[i].CriaObjeto();
-		}
-		if(playerController.rendimento > 0){
-			print("ganhou");
-		}else if(tempoRestante <= 0){
-			print("perdeu");
-		}
-		FinishObjects();
-		endText.gameObject.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
-		transition.GetComponent<Animator>().Play("transition_on");
-        SceneManager.LoadScene("UpdateScene");
-	}
-	private IEnumerator Timer(){
-		while(tempoRestante>0){
-			tempoRestante -= Time.deltaTime;
-			timeText.text = ((int)tempoRestante).ToString();
-			yield return new WaitForEndOfFrame();
-		}
-	}
-	public IEnumerator StopCreatorForSeconds(float seconds){
-		StopCoroutine(levelLoop);
-		yield return new WaitForSeconds(seconds);
-		levelLoop = InitializeLoop();
-	}
-	private void FinishObjects(){
-		var list = FindObjectsOfType<FlyingObjects>();
-		Destroy(GameObject.Find("TouchAreas"));
-		foreach(FlyingObjects fo in list){
-			Destroy(fo.gameObject,0.1f);
-			Instantiate(explosion,fo.transform.position,Quaternion.identity);
-		}
-	}
-	private IEnumerator Tutorial(string text){
-		tutorialText.gameObject.SetActive(true);
-		tutorialText.transform.GetChild(0).GetComponent<Text>().text = text;
-		yield return new WaitForSeconds(2f);
-		tutorialText.gameObject.SetActive(false);
-	}
+        InitializeLevelValues();
+        transition.GetComponent<Animator>().Play("transition_off");
+        yield return ShowLittleTutorial();
+        yield return ShowBeginScreen();
+        ShowUI(true);
+        ShowTouchArea(true);
+        StartCoroutine(Timer());
+        while ( Won(level.levelType) )
+        {
+            float time = Random.Range(level.intervaloTempo[0], level.intervaloTempo[1]);
+            yield return new WaitForSeconds(time);
+            int i = Random.Range(0, criadoresObj.Count);
+            if(canCreate) criadoresObj[i].CriaObjeto();
+        }
+        FinishObjects();
+        yield return ShowEndingScreen();
+        Save();
+    }
+    private bool Won(LevelType lType)
+    {
+        print("Target: " + target);
+        print("Rndimeto: " + playerController.rendimento);
+        print("TempoRestante: " + tempoRestante);
+        switch (lType)
+        {
+            case LevelType.MATHMATIC:
+                if (currentTime > 0 && playerController.rendimento < target) return true;
+                break;
+            case LevelType.SCIENCE:
+                if (currentTime > 0 && playerController.rendimento > 0) return true;
+                break;
+            case LevelType.HISTORY:
+                if (currentTime > 0) return true;
+                break;
+        }
+        return false;
+    }
+    public IEnumerator StopCreatorForSeconds(float seconds)
+    {
+        canCreate = false;
+        yield return new WaitForSeconds(seconds);
+        canCreate = true;
+    }
+    private void InitializeLevelValues()
+    {
+        target = level.targetScore;
+        initTime = level.initTime;
+        tempoRestante = level.duracao;
+    }
+    private IEnumerator ShowLittleTutorial()
+    {
+        tutorialText.transform.DOScale(0f, 0);
+        tutorialText.gameObject.SetActive(true);
+        tutorialText.transform.GetChild(0).GetComponent<Text>().text = level.description;
+        tutorialText.transform.DOScale(1f, 0.5f);
+        yield return new WaitForSeconds(2f);
+        tutorialText.transform.DOScale(0f, 0.1f);
+        yield return new WaitForSeconds(0.2f);
+        tutorialText.gameObject.SetActive(false);
+    }
+    private IEnumerator ShowBeginScreen()
+    {
+        beginText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        beginText.gameObject.SetActive(false);
+    }
+    private IEnumerator ShowEndingScreen()
+    {
+        ShowUI(false);
+        endText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        endText.gameObject.SetActive(false);
+    }
+    private IEnumerator Timer()
+    {
+        currentTime = tempoRestante;
+        while(currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            timeText.text = ((int)currentTime).ToString();
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    private void Save()
+    {
+        print("Saved");
+    }
+    private void ShowUI(bool b)
+    {
+        if (b)
+        {
+            uiElements.transform.DOScaleY(5,0);
+            uiElements.transform.DOScaleY(1, 1f);
+        }
+        else
+        {
+            uiElements.transform.DOScaleY(1, 0);
+            uiElements.transform.DOScaleY(5, 0.5f);
+        }
+    }
+    private void ShowTouchArea(bool b)
+    {
+        if (b)
+        {
+            touchArea.transform.DOScaleY(0, 0);
+            touchArea.transform.DOScaleY(6, 0.5f);
+        }
+        else
+        {
+            touchArea.transform.DOScaleY(6, 0);
+            touchArea.transform.DOScaleY(0, 0.5f);
+        }
+    }
+    private void FinishObjects()
+    {
+        var list = FindObjectsOfType<FlyingObjects>();
+        Destroy(GameObject.Find("TouchAreas"));
+        foreach (FlyingObjects fo in list)
+        {
+            Destroy(fo.gameObject, 0.1f);
+            Instantiate(explosion, fo.transform.position, Quaternion.identity);
+        }
+    }
 }

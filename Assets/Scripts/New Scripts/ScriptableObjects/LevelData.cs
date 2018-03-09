@@ -6,8 +6,12 @@ using UnityEngine;
 public class LevelData : ScriptableObject {
 	[Header("Geral")]
 	public LevelType levelType;
+    public string description;
+
+    public float initTime;
 	public float duracao;
-	public float modificadorDificuldade;
+    public int targetScore;
+
 	public float[] intervaloTempo = {3,6};
 	public float[] intervaloVelocidade = {5,10};
 
