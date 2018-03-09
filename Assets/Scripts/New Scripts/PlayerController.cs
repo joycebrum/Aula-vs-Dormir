@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
         UpdateSkillUI(waterSkillText,playerAttributes.passesAgua);
     }
     public void PerderRendimento(int perda = 1){
+        print("Perdeu");
         rendimento -= perda;
         if(rendimento<0)
         {
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour {
     }
     private IEnumerator RendimentoLoop(){
         var lManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        while(lManager.tempoRestante > 0){
+        while(lManager.tempoRestante >= 0){
             PerderRendimento();
             yield return new WaitForSeconds(0.1f);
         }

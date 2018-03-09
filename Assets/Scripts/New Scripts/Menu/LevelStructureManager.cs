@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class LevelStructureManager : MonoBehaviour {
 
 	public PlayerSave playerSave;
+    public List<LevelData> levelTypes;
+
+    public GameObject levelPrefab;
+    public GameObject menu;
 
 	[Header("UI Elements")]
 	public Text playerName;
@@ -76,6 +80,14 @@ public class LevelStructureManager : MonoBehaviour {
 		ShowSemesterOfIndex(viewSemester);
 	}
 	public void StartLevel(int i){
-
+        StartCoroutine(StartNewLevel(i));
 	}
+    private IEnumerator StartNewLevel(int i)
+    {
+        var go = Instantiate(levelPrefab);
+        yield return new WaitForEndOfFrame();
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().InitLevel(levelTypes[i]);
+        menu.SetActive(false);
+        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LevelLoop() );
+    }
 }

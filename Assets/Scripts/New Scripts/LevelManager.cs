@@ -35,22 +35,18 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] private GameObject touchArea;
     [SerializeField] private PlayerController playerController;
 
-    private void Start()
-    {
-        StartCoroutine(LevelLoop());
-    }
     public void InitLevel(LevelData lvl)
     {
         level = lvl;
         InitializeLevelValues();
     }
-    private IEnumerator LevelLoop()
+    public IEnumerator LevelLoop()
     {
         touchArea.transform.DOScaleY(0, 0);
         uiElements.transform.DOScaleY(5, 0);
 
         InitializeLevelValues();
-        transition.GetComponent<Animator>().Play("transition_off");
+        //transition.GetComponent<Animator>().Play("transition_off");
         yield return ShowLittleTutorial();
         yield return ShowBeginScreen();
         ShowUI(true);
@@ -69,9 +65,6 @@ public class LevelManager : MonoBehaviour {
     }
     private bool Won(LevelType lType)
     {
-        print("Target: " + target);
-        print("Rndimeto: " + playerController.rendimento);
-        print("TempoRestante: " + tempoRestante);
         switch (lType)
         {
             case LevelType.MATHMATIC:
