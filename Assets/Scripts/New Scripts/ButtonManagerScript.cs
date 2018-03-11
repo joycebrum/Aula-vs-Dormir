@@ -4,18 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ButtonManagerScript : MonoBehaviour {
-    [SerializeField] private GameObject transition;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
+    [SerializeField] private GameObject transition;    	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-    public void OpenNewScene(string name)
+    public void OpenNewSceneCiencias(string name)
     {
+        HistoryScript.position = 1;
         StartCoroutine(OpenNewSceneWithTransition(name));
     }
     private IEnumerator OpenNewSceneWithTransition(string name)

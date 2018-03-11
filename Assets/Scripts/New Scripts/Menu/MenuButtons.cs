@@ -7,6 +7,7 @@ public class MenuButtons : MonoBehaviour {
 	[SerializeField] private GameObject transition;
 
 	private void Start(){
+        HistoryScript.position = 0;
 		transition.GetComponent<Animator>().Play("transition_off");
 	}
 	public void OpenNewScene(string name){
