@@ -20,7 +20,7 @@ public class UpdateSceaneScript : MonoBehaviour {
         texto[2].text = "Duracao banheiro: " + playerAttributes.duracaoBanheiro.ToString() + " segundos";
         texto[3].text = "Aguas: " + playerAttributes.passesAgua.ToString();
         texto[4].text = "Passes: " + playerAttributes.passesBanheiro.ToString();
-        numUpdates.text = "Updates possiveis = " + updates.ToString();
+        numUpdates.text = "Upgrades possíveis = " + updates.ToString();
         updatesantigo = updates;
 	}
 

@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour {
 
     private Coroutine levelLoop;
     private Coroutine timer;
+    private bool victory;
 
     public float initTime;
     public float tempoRestante;
@@ -37,6 +38,7 @@ public class LevelManager : MonoBehaviour {
 
     public void InitLevel(LevelData lvl)
     {
+        victory = false;
         level = lvl;
         InitializeLevelValues();
     }
@@ -62,6 +64,7 @@ public class LevelManager : MonoBehaviour {
         FinishObjects();
         yield return ShowEndingScreen();
         Save();
+        SceneManager.LoadScene("Historia");
     }
     private bool Won(LevelType lType)
     {
@@ -69,9 +72,25 @@ public class LevelManager : MonoBehaviour {
         {
             case LevelType.MATHMATIC:
                 if (currentTime > 0 && playerController.rendimento < target) return true;
+                else if (playerController.rendimento >= target)// se for retornar false, ve se ganhou ou perdeu
+                {
+                    HistoryScript.position = 3;//mostra texto de vitoria
+                }
+                else
+                {
+                    HistoryScript.position = 4;//mostra texto de derrota
+                }
                 break;
             case LevelType.SCIENCE:
                 if (currentTime > 0 && playerController.rendimento > 0) return true;
+                else if(playerController.rendimento > 0)// se for retornar false, ve se ganhou ou perdeu
+                {
+                    HistoryScript.position = 1;//mostra texto de vitoria
+                }
+                else
+                {
+                    HistoryScript.position = 2;//mostra texto de derrota
+                }
                 break;
             case LevelType.HISTORY:
                 if (currentTime > 0) return true;

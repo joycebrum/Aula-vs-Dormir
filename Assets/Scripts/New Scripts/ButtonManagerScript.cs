@@ -11,7 +11,7 @@ public class ButtonManagerScript : MonoBehaviour {
 	}
     public void OpenNewSceneCiencias(string name)
     {
-        HistoryScript.position = 1;
+        HistoryScript.position = 2;
         StartCoroutine(OpenNewSceneWithTransition(name));
     }
     private IEnumerator OpenNewSceneWithTransition(string name)
