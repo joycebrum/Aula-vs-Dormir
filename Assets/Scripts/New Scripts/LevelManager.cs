@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEditor;
 
 public class LevelManager : MonoBehaviour {
     [Header("Level")]
@@ -146,7 +147,17 @@ public class LevelManager : MonoBehaviour {
     }
     private void Save()
     {
-        print("Saved");
+        LevelStructureManager lsm = GameObject.Find("LevelStructureManager").GetComponent<LevelStructureManager>();
+        lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()].cr[(int)level.levelType] = GetGrade();
+        AssetDatabase.Refresh();
+        EditorUtility.SetDirty(lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()]);
+        AssetDatabase.SaveAssets();
+        print("Saved "+ GetGrade()+"/"+ lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()].cr[(int)level.levelType]);
+    }
+    private float GetGrade()
+    {
+        //Criar criterio
+        return 7.0f;
     }
     private void ShowUI(bool b)
     {

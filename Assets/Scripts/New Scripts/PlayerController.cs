@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour {
         UpdateSkillUI(waterSkillText,playerAttributes.passesAgua);
     }
     public void PerderRendimento(int perda = 1){
-        print("Perdeu");
         rendimento -= perda;
         if(rendimento<0)
         {
