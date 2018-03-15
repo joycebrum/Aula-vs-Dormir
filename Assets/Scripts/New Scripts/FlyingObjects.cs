@@ -6,13 +6,12 @@ public class FlyingObjects : MonoBehaviour {
 	public int damage = 40;
 	[SerializeField] private MovementType movementType;
 	[SerializeField] private int direction;
-	[SerializeField] private float velocity;
+    public float velocity;
 
 	const float waveHeight = 7;
 	const float waveDuration = 10;
 
 	private Rigidbody2D rb;
-
 	public void SetVelocity(float v){
 		velocity = v;
 	}
