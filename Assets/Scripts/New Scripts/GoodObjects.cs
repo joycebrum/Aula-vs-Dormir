@@ -12,7 +12,7 @@ public class GoodObjects : MonoBehaviour {
     private AudioSource goodAudio;
 
 	private void Start(){
-        goodAudio = GetComponent<AudioSource>();
+        goodAudio = GameObject.Find("Audio Source Correct").GetComponent<AudioSource>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 		playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
 	}
@@ -33,7 +33,7 @@ public class GoodObjects : MonoBehaviour {
 		}
 	}
 	private IEnumerator DecreaseScaleThenDie(){
-		Destroy(GetComponent<FlyingObjects>());
+        Destroy(GetComponent<FlyingObjects>());
 		Destroy(GetComponent<Rigidbody2D>());
 		while(transform.localScale.x > 0.01f){
 			transform.localScale = new Vector3(Mathf.MoveTowards(transform.localScale.x, 0, 0.2f),

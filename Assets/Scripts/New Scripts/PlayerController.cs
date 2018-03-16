@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 
     public PlayerAttributes playerAttributes;
     public GameObject Parent;
+    public ObjectCreator cafeCreat;
     private ObjectCreator objCreat;
     public int rendimento;
     [SerializeField] private int rendMinimo = 75;
@@ -20,14 +21,21 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Text waterSkillText;
     [SerializeField] private List<Sprite> mySpriteList;
     [SerializeField] private SpriteRenderer PlayerSprite;
+
+    //Campos relacionados ao efeito cafe
     [SerializeField] private int valorCoffee;
     [SerializeField] private float velocidadeItens;//velocidade que os itens recebem ao receber o efeito negativo
+    [SerializeField] private Text textCafe;
+    [SerializeField] private Text textEfeitoCafe;
+    [SerializeField] private Text textEfeitoCafeQuant;
 
+    private int CountCafe;
     public bool coffeeEffect;
     private bool GoodEffect;
 
     private void Start() {
         coffeeEffect = false;
+        CountCafe = 0;
         GoodEffect = false;
         objCreat = GameObject.Find("ObjCreator_Bom").GetComponent<ObjectCreator>();
         rendimento = playerAttributes.rendimentoInicial;
@@ -49,6 +57,7 @@ public class PlayerController : MonoBehaviour {
         rendimento += ganho;
         if (GoodEffect)
         {
+            print("Cafe Good Efect");
             rendimento += valorCoffee;
         }
         if (rendimento > playerAttributes.rendimentoMaximo)
@@ -73,6 +82,10 @@ public class PlayerController : MonoBehaviour {
     }
     public void UsarCafe(int damage, int duracao)
     {
+        CountCafe++;
+        textEfeitoCafe.text = "Toque + ";
+        textEfeitoCafeQuant.text = "" + damage;
+        textCafe.text = "" + CountCafe;
         valorCoffee = damage;
         GoodEffect = true;
         coffeeEffect = true;
@@ -80,7 +93,9 @@ public class PlayerController : MonoBehaviour {
     }
     public void EfeitoNegativoCafe(int duracao)
     {
-        objCreat.coffeeBadEffect = true;//inicia o efeito negativo em ObjectCreator que aumenta a velocidade no valor determinado la
+        print("Efeito Ruim Começou");
+        textEfeitoCafe.text = "Velocidade + ";
+        textEfeitoCafeQuant.text = "" + velocidadeItens;
         objCreat.quant = velocidadeItens;
         ChangeVelocity(velocidadeItens);
         StartCoroutine(CoffeeBadCooldown(duracao));
@@ -88,9 +103,14 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator CoffeeBadCooldown(int duracao)
     {
         yield return new WaitForSeconds((int)duracao / 2);//espera metade do tempo
-        objCreat.coffeeBadEffect = false;
-        ChangeVelocity(velocidadeItens);
+        objCreat.quant = 0;
+        ChangeVelocity(-velocidadeItens);
         coffeeEffect = false;//acaba o efeito por completo e outro cafe ja pode ser tomado
+        cafeCreat.Coffee = false;
+        velocidadeItens += 1f;
+        textEfeitoCafe.text = "Sem Efeito";
+        textEfeitoCafeQuant.text = "";
+        print("Efeito Ruim Acabou");
     }
     private void ChangeVelocity(float quant)
     {

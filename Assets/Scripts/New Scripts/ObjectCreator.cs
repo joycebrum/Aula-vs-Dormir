@@ -10,39 +10,23 @@ public class ObjectCreator : MonoBehaviour {
 
 	[Header("Preferências")]
 	[SerializeField] private int sinalDirecao;
-    public bool CoffeInTheGame;//evita ter muitos cafes no jogo
-    public bool coffeeBadEffect;
+    public bool Coffee;
     public float quant;
 
     public void Start()
     {
-
-        CoffeInTheGame = false;
-        coffeeBadEffect = false;
+        Coffee = false; //sempre vai ser false para o criador bom e o ruim
+        quant = 0;
     }
     public void CriaObjeto(float velocity = 5, int movementType = 0){
-        GameObject randObj;
-        if (CoffeInTheGame)//precisa implementar ainda no CoffeeScript
+        if (!Coffee)
         {
-            randObj = objetos[Random.Range(0, objetos.Count-1)];//retira o ultimo item (cafe)
+            GameObject randObj = objetos[Random.Range(0, objetos.Count)];
+            GameObject obj = Instantiate(randObj, spawnPoints[Random.Range(0, spawnPoints.Count)].position, Quaternion.identity);
+            obj.GetComponent<FlyingObjects>().SetVelocity(velocity + quant);
+            obj.GetComponent<FlyingObjects>().SetDirection(sinalDirecao);
+            obj.GetComponent<FlyingObjects>().SetMovementType(movementType);
         }
-        else
-        {
-            randObj = objetos[Random.Range(0, objetos.Count)];
-        }
-        GameObject obj = Instantiate(randObj,spawnPoints[Random.Range(0,spawnPoints.Count)].position,Quaternion.identity);
-
-        if (coffeeBadEffect)
-        {
-            obj.GetComponent<FlyingObjects>().SetVelocity(velocity+quant);
-        }
-        else
-        {
-            obj.GetComponent<FlyingObjects>().SetVelocity(velocity);
-        }
-		obj.GetComponent<FlyingObjects>().SetDirection(sinalDirecao);
-		obj.GetComponent<FlyingObjects>().SetMovementType(movementType);
-
 		//print("Objeto Criado");
 	}
  }
