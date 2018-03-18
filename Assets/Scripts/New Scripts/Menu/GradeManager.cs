@@ -22,12 +22,15 @@ public class GradeManager : MonoBehaviour {
     public Transform classGrid;
     public GameObject charPanel;
 
+    public List<GameObject> classBox;
+    public GameObject finalTestBox;
+
     private void Start()
     {
         InitializeGrade();
         grade[0, 0] = 4.3f;
         grade[0, 1] = 5.3f;
-        grade[0, 2] = 1.1f;
+        //grade[0, 2] = 1.1f;
         StartUiObjects();
     }
     public void SaveData()
@@ -52,7 +55,7 @@ public class GradeManager : MonoBehaviour {
         for(int i = 0; i < 3; i++)
         {
             if(grade[semester,i] == -1)
-            {
+            {         
                 return i;
             }
         }
@@ -60,12 +63,6 @@ public class GradeManager : MonoBehaviour {
     }
     public void StartUiObjects()
     {
-        //Char Panel
-        charPanel.transform.DOScale(new Vector3(0, 0, 0), 0);
-        charPanel.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
-        charPanel.transform.GetChild(1).GetComponent<Text>().text = GetAverage(GetCurrentSemester() - 1).ToString();
-        charPanel.transform.GetChild(2).GetComponent<Text>().text = "Joyce Brum";
-        charPanel.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = GetCurrentSemester().ToString() + "º Semestre";
         //Class Grid
         CreateClassGrid();
     }
@@ -73,14 +70,18 @@ public class GradeManager : MonoBehaviour {
     {
         string[] names = { "Matematica", "História", "Ciências" };
         int i = 0;
-        for (i = 0; i < GetCurrentTest(GetCurrentSemester()-1); i++){
-            var temp = Instantiate(classUi,Vector3.up,Quaternion.identity,classGrid);
+        int current = GetCurrentTest(GetCurrentSemester() - 1);
+        for (i = 0; i < 3; i++){
+            Vector3 targetScale;
+            if (i == 3) break;
+            if (i == current) { targetScale = new Vector3(1f, 1.1f, 1f); } else { targetScale = new Vector3(1f, 0.9f, 1f); }
+            var temp = classBox[i];
             temp.transform.DOScale(new Vector3(0, 0, 0), 0);
-            temp.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+            temp.transform.DOScale(targetScale, 0.5f);
             temp.transform.GetChild(0).GetComponent<Text>().text = names[i];
             temp.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = grade[GetCurrentSemester()-1,i].ToString();
         }
-        if(i == 3)
+        if(current == 3)
         {
             if(GetAverage(GetCurrentSemester() - 1) < 5.0)
             {
@@ -126,9 +127,9 @@ public class GradeManager : MonoBehaviour {
     }
     public void ShowFinalTest(int semester)
     {
-        var temp = Instantiate(finalClassUi, Vector3.up, Quaternion.identity, classGrid);
+        var temp = finalTestBox;
         temp.transform.DOScale(new Vector3(0, 0, 0), 0);
-        temp.transform.DOScale(new Vector3(1, 1, 1), 1f);
+        temp.transform.DOScale(new Vector3(1, 0.9f, 1), 0.5f);
         temp.transform.GetChild(0).GetComponent<Text>().text = "Prova Final";
 
         if (finalTest[semester] == -1)
@@ -150,8 +151,17 @@ public class GradeManager : MonoBehaviour {
         PlayerPrefs.SetInt("currentSemester", 1);
         PlayerPrefs.Save();
     }
-    public void StartLevel(int i)
+    public void StartLevel()
     {
-        print(i);
+
+        int test = GetCurrentTest(GetCurrentSemester()-1);
+        if (test < 3)
+        {
+            print("AULA DE "+(LevelType)test);
+        }
+        else
+        {
+            print("PROVA FINAL");
+        }
     }
 }
