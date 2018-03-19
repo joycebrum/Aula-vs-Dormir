@@ -85,7 +85,7 @@ public class GradeManager : MonoBehaviour {
     public void StartUiObjects()
     {
         charName.text = "Joyce Brum";
-        charSemester.text = GetCurrentSemester().ToString();
+        charSemester.text = GetCurrentSemester().ToString() + "º Semestre";
         crSoFar.text = GetAverage(GetCurrentSemester()-1).ToString();
         //Class Grid
         CreateClassGrid();
@@ -132,17 +132,19 @@ public class GradeManager : MonoBehaviour {
             }
         }
     }
-    public float GetAverage(int semester)
+    public static float GetAverage(int semester)
     {
+        float[,] grade = GradeManager.LoadGrade();
         if(grade[semester, 0] != -1 && grade[semester, 1] != -1 && grade[semester, 2] != -1)
         {
             return (grade[semester, 0] + grade[semester, 1] + grade[semester, 2]) / 3;
         }
         return 0;
     }
-    public float GetAverageWithFinalTest(int semester)
+    public static float GetAverageWithFinalTest(int semester)
     {
-        return (GetAverage(semester) + finalTest[semester]) / 2;
+        if (GradeManager.LoadFinalTest()[semester] == -1) return 0;
+        return (GetAverage(semester) + GradeManager.LoadFinalTest()[semester]) / 2;
     }
     public void InitializeGrade()
     {
@@ -178,16 +180,21 @@ public class GradeManager : MonoBehaviour {
     }
     public void ResetSemester()
     {
-        PlayerPrefs.SetInt("currentSemester", 1);
+        for(int i = 0; i < 3; i++)
+        {
+            grade[GetCurrentSemester() - 1, i] = -1;
+        }
+        finalTest[GetCurrentSemester() - 1] = -1;
+        GradeManager.SaveData(grade, finalTest);
         PlayerPrefs.Save();
     }
     public void StartLevel()
     {
 
-        int test = GetCurrentTest(GetCurrentSemester()-1);
+        int test = GetCurrentTest(GetCurrentSemester() - 1);
         if (test < 3)
         {
-            print("AULA DE "+(LevelType)test);
+            print("AULA DE " + (LevelType)test);
             levelManager.transform.parent.gameObject.SetActive(true);
             menu.DOFade(0, 1f);
             levelManager.InitLevelFromIndex(test);
@@ -197,7 +204,9 @@ public class GradeManager : MonoBehaviour {
         }
         else
         {
-            print("PROVA FINAL");
+            print("PF");
+            finalTest[GetCurrentSemester() - 1] = 10f;
+            GradeManager.SaveData(GradeManager.LoadGrade(), finalTest);
         }
     }
 }

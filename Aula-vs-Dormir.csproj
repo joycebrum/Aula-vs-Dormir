@@ -283,6 +283,9 @@
     <Reference Include="DOTweenEditor">
       <HintPath>Assets/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/pedro/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -304,9 +307,6 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/pedro/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Demigiant\DOTween\Examples\Basics.cs" />
@@ -320,6 +320,7 @@
     <Compile Include="Assets\Scripts\New Scripts\FlyingObjects.cs" />
     <Compile Include="Assets\Scripts\New Scripts\GoodObjects.cs" />
     <Compile Include="Assets\Scripts\New Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\New Scripts\Menu\GradeHistory.cs" />
     <Compile Include="Assets\Scripts\New Scripts\Menu\GradeManager.cs" />
     <Compile Include="Assets\Scripts\New Scripts\Menu\LevelStructureManager.cs" />
     <Compile Include="Assets\Scripts\New Scripts\Menu\MenuButtons.cs" />

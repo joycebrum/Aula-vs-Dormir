@@ -5,10 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManagerScript : MonoBehaviour {
     [SerializeField] private GameObject transition;    	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
     public void OpenNewSceneCiencias(string name)
     {
         HistoryScript.position = 2;
