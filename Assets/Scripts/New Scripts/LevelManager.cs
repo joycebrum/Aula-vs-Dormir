@@ -8,6 +8,7 @@ using UnityEditor;
 
 public class LevelManager : MonoBehaviour {
     [Header("Level")]
+    public List<LevelData> lData;
     public LevelData level;
     [SerializeField] private List<ObjectCreator> criadoresObj;
 
@@ -37,11 +38,18 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] private GameObject touchArea;
     [SerializeField] private PlayerController playerController;
 
+    public int currentSemester, currentTest;
+    public GameObject gradeManager;
+
     public void InitLevel(LevelData lvl)
     {
         victory = false;
         level = lvl;
         InitializeLevelValues();
+    }
+    public void InitLevelFromIndex(int i)
+    {
+        InitLevel(lData[i]);
     }
     public IEnumerator LevelLoop()
     {
@@ -147,17 +155,16 @@ public class LevelManager : MonoBehaviour {
     }
     private void Save()
     {
-        LevelStructureManager lsm = GameObject.Find("LevelStructureManager").GetComponent<LevelStructureManager>();
-        lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()].cr[(int)level.levelType] = GetGrade();
-        AssetDatabase.Refresh();
-        EditorUtility.SetDirty(lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()]);
-        AssetDatabase.SaveAssets();
-        print("Saved "+ GetGrade()+"/"+ lsm.playerSave.semesters[lsm.GetCurrentSemesterIndex()].cr[(int)level.levelType]);
+        float[,] grade = GradeManager.LoadGrade();
+        float[] finalTest = GradeManager.LoadFinalTest();
+        grade[currentSemester, currentTest] = GetGrade();
+        print(grade[currentSemester, currentTest]);
+        GradeManager.SaveData(grade,finalTest);
     }
     private float GetGrade()
     {
         //Criar criterio
-        return 7.0f;
+        return 4.0f;
     }
     private void ShowUI(bool b)
     {

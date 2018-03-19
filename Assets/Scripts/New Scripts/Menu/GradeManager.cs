@@ -3,48 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GradeManager : MonoBehaviour {
     const int semesterTotal = 8;
     [Header("Importants")]
+    public static string gradeDataSave = "gradeSave";
+    public static string finalTestDataSave = "finalTestSave";
+
 	[HideInInspector]
     public float[,] grade = new float[semesterTotal,3];
     [HideInInspector]
     public float[] finalTest = new float[semesterTotal];
 
-    [Header("Save Objects")]
-    public string gradeDataSave;
-    public string finalTestDataSave;
 
     [Header("UI Objects")]
-    public GameObject classUi;
-    public GameObject finalClassUi;
+    public LevelManager levelManager;
+    public CanvasGroup menu;
+
+    public Text charName;
+    public Text charSemester;
+    public Text crSoFar;
+
     public Transform classGrid;
     public GameObject charPanel;
 
     public List<GameObject> classBox;
     public GameObject finalTestBox;
 
+    private string errorGrade;
+
     private void Start()
     {
+        //BUILD ERRORGRADE
         InitializeGrade();
         grade[0, 0] = 4.3f;
         grade[0, 1] = 5.3f;
         //grade[0, 2] = 1.1f;
+        errorGrade = JsonUtility.ToJson(grade);
+        
+        //INIT
+        grade = GradeManager.LoadGrade();
+        finalTest = GradeManager.LoadFinalTest();
+
         StartUiObjects();
     }
-    public void SaveData()
+    public static void SaveData(float[,] grade, float[] finalTest)
     {
         string s;
-        s = JsonUtility.ToJson(grade);
+        print(grade[0, 2]);
+        s = JsonConvert.SerializeObject(grade);
         PlayerPrefs.SetString(gradeDataSave,s);
-        s = JsonUtility.ToJson(finalTest);
+        s = JsonConvert.SerializeObject(finalTest);
         PlayerPrefs.SetString(finalTestDataSave, s);
+        PlayerPrefs.Save();
     }
-    public void LoadData()
+    public static float[,] LoadGrade()
     {
-        grade = JsonUtility.FromJson<float[,]>(PlayerPrefs.GetString(gradeDataSave));
-        finalTest = JsonUtility.FromJson<float[]>(PlayerPrefs.GetString(finalTestDataSave));
+        return JsonConvert.DeserializeObject<float[,]>(PlayerPrefs.GetString(gradeDataSave));
+    }
+    public static float[] LoadFinalTest()
+    {
+        return JsonConvert.DeserializeObject<float[]>(PlayerPrefs.GetString(finalTestDataSave));
     }
     public int GetCurrentSemester()
     {
@@ -63,6 +84,9 @@ public class GradeManager : MonoBehaviour {
     }
     public void StartUiObjects()
     {
+        charName.text = "Joyce Brum";
+        charSemester.text = GetCurrentSemester().ToString();
+        crSoFar.text = GetAverage(GetCurrentSemester()-1).ToString();
         //Class Grid
         CreateClassGrid();
     }
@@ -89,16 +113,22 @@ public class GradeManager : MonoBehaviour {
                 if (finalTest[GetCurrentSemester()-1] != -1 && GetAverageWithFinalTest(GetCurrentSemester()-1) < 5.0)
                 {
                     print("REPROVADO");
+                    ResetSemester();
+                    SceneManager.LoadScene("MenuDeFases");
                 }
                 else if(finalTest[GetCurrentSemester() - 1] != -1)
                 {
                     print("PASSAR DE SEMESTRE COM FINAL");
+                    NextSemester();
+                    SceneManager.LoadScene("MenuDeFases");
                 }
             }
             else
             {
                 finalTest[GetCurrentSemester() - 1] = 0;
                 print("PASSAR DE SEMESTRE");
+                NextSemester();
+                SceneManager.LoadScene("MenuDeFases");
             }
         }
     }
@@ -158,6 +188,12 @@ public class GradeManager : MonoBehaviour {
         if (test < 3)
         {
             print("AULA DE "+(LevelType)test);
+            levelManager.transform.parent.gameObject.SetActive(true);
+            menu.DOFade(0, 1f);
+            levelManager.InitLevelFromIndex(test);
+            levelManager.currentSemester = GetCurrentSemester() - 1;
+            levelManager.currentTest = GetCurrentTest(GetCurrentSemester() - 1);
+            StartCoroutine(levelManager.LevelLoop());
         }
         else
         {
