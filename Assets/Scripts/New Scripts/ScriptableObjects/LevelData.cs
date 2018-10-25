@@ -11,6 +11,8 @@ public class LevelData : ScriptableObject {
     public float initTime;
 	public float duracao;
     public int targetScore;
+    public int initScore;
+    public bool final;
 
 	public float[] intervaloTempo = {3,6};
 	public float[] intervaloVelocidade = {5,10};

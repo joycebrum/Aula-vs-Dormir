@@ -73,7 +73,25 @@ public class LevelManager : MonoBehaviour {
         FinishObjects();
         yield return ShowEndingScreen();
         Save();
-        SceneManager.LoadScene("Historia");
+        if(level.final)
+        {
+            if(level.levelType == LevelType.MATHMATIC)
+            {
+
+            }
+            else if(level.levelType == LevelType.HISTORY)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Historia");
+        }
     }
     private bool Won(LevelType lType)
     {
@@ -102,7 +120,15 @@ public class LevelManager : MonoBehaviour {
                 }
                 break;
             case LevelType.HISTORY:
-                if (currentTime > 0) return true;
+                if (currentTime > 0 && playerController.rendimento > 0) return true;
+                else if(playerController.rendimento > 0)
+                {
+                    HistoryScript.position = 1;
+                }
+                else
+                {
+                    HistoryScript.position = 2;
+                }
                 break;
         }
         return false;
@@ -115,6 +141,7 @@ public class LevelManager : MonoBehaviour {
     }
     private void InitializeLevelValues()
     {
+        print("initializeLevelValues" + level);
         target = level.targetScore;
         initTime = level.initTime;
         tempoRestante = level.duracao;
@@ -158,7 +185,6 @@ public class LevelManager : MonoBehaviour {
         float[,] grade = GradeManager.LoadGrade();
         float[] finalTest = GradeManager.LoadFinalTest();
         grade[currentSemester, currentTest] = GetGrade();
-        print(grade[currentSemester, currentTest]);
         GradeManager.SaveData(grade,finalTest);
     }
     private float GetGrade()

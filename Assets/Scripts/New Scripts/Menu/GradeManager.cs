@@ -52,6 +52,7 @@ public class GradeManager : MonoBehaviour {
     public static void SaveData(float[,] grade, float[] finalTest)
     {
         string s;
+        print(grade);
         print(grade[0, 2]);
         s = JsonConvert.SerializeObject(grade);
         PlayerPrefs.SetString(gradeDataSave,s);
@@ -188,6 +189,8 @@ public class GradeManager : MonoBehaviour {
         GradeManager.SaveData(grade, finalTest);
         PlayerPrefs.Save();
     }
+
+    //mexer aqui para abrir a fase final
     public void StartLevel()
     {
 
@@ -205,8 +208,12 @@ public class GradeManager : MonoBehaviour {
         else
         {
             print("PF");
-            finalTest[GetCurrentSemester() - 1] = 10f;
-            GradeManager.SaveData(GradeManager.LoadGrade(), finalTest);
+            levelManager.transform.parent.gameObject.SetActive(true);
+            menu.DOFade(0, 1f);
+            levelManager.InitLevelFromIndex(test);
+            levelManager.currentSemester = GetCurrentSemester() - 1;
+            levelManager.currentTest = GetCurrentTest(GetCurrentSemester() - 1);
+            StartCoroutine(levelManager.LevelLoop());
         }
     }
 }

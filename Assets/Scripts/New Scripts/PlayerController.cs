@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour {
         rendimento += ganho;
         if (GoodEffect)
         {
-            print("Cafe Good Efect");
             rendimento += valorCoffee;
         }
         if (rendimento > playerAttributes.rendimentoMaximo)
@@ -93,7 +92,6 @@ public class PlayerController : MonoBehaviour {
     }
     public void EfeitoNegativoCafe(int duracao)
     {
-        print("Efeito Ruim Começou");
         textEfeitoCafe.text = "Velocidade + ";
         textEfeitoCafeQuant.text = "" + velocidadeItens;
         objCreat.quant = velocidadeItens;
@@ -110,7 +108,6 @@ public class PlayerController : MonoBehaviour {
         velocidadeItens += 1f;
         textEfeitoCafe.text = "Sem Efeito";
         textEfeitoCafeQuant.text = "";
-        print("Efeito Ruim Acabou");
     }
     private void ChangeVelocity(float quant)
     {
