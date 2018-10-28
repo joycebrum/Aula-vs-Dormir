@@ -26,11 +26,12 @@ public class GoodObjects : MonoBehaviour {
 	private void OnMouseDown(){
         goodAudio.Play();
 		var go = Instantiate(plus,transform.position,Quaternion.identity);
-		Destroy(go,1f);
-		StartCoroutine( DecreaseScaleThenDie() );
-		if(levelManager.level.levelType == LevelType.HISTORY){
-			playerController.GanharRendimento(GetComponent<FlyingObjects>().damage);
-		}
+        Destroy(go, 1f);
+        if (levelManager.level.levelType == LevelType.HISTORY)
+        {
+            playerController.GanharRendimento(GetComponent<FlyingObjects>().damage / 4);
+        }
+        StartCoroutine( DecreaseScaleThenDie() );
 	}
 	private IEnumerator DecreaseScaleThenDie(){
         Destroy(GetComponent<FlyingObjects>());

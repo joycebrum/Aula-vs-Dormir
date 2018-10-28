@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     //[SerializeField] private List<GameObject> FlyingPrefabes;
     [Header("Elementos da UI")]
     [SerializeField] private Image rendimentoImg;
+    Color InitialColor = Color.green;
     [SerializeField] private Text rendimentoText;
     [SerializeField] private Image bathroomSkillImg;
     [SerializeField] private Text bathroomSkillText;
@@ -38,8 +39,7 @@ public class PlayerController : MonoBehaviour {
         CountCafe = 0;
         GoodEffect = false;
         objCreat = GameObject.Find("ObjCreator_Bom").GetComponent<ObjectCreator>();
-        rendimento = playerAttributes.rendimentoInicial;
-        PlayerSprite = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+         PlayerSprite = GameObject.Find("Player").GetComponent<SpriteRenderer>();
         StartCoroutine(RendimentoLoop());
         UpdateRendimentoUI();
         UpdateSkillUI(bathroomSkillText, playerAttributes.passesBanheiro);
@@ -139,6 +139,14 @@ public class PlayerController : MonoBehaviour {
     private void UpdateRendimentoUI(){
         float numberRend = (float)rendimento / playerAttributes.rendimentoMaximo;
         rendimentoImg.fillAmount = numberRend; //valor entre 0 e 1
+        if(numberRend < 0.30f)
+        {
+            rendimentoImg.color = Color.red;
+        }
+        else
+        {
+            rendimentoImg.color = InitialColor;
+        }
         rendimentoText.text = rendimento.ToString();
         if(numberRend>0.8)
         {

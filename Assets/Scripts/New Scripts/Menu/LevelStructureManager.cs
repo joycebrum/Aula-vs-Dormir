@@ -53,12 +53,14 @@ public class LevelStructureManager : MonoBehaviour {
 		finalCR.text = GetFinalCR(index).ToString();
 	}
 	public int GetLastLevelType(int semester){
+        print("semester" + semester);
 		int i;
 		for(i = 0; i < 4; i++){
 			if(playerSave.semesters[semester].cr[i] == -1){
 				break;
 			}
 		}
+        print("level " + i);
 		return i;
 	}
 	public float GetFinalCR(int semester){
