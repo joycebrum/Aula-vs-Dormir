@@ -29,7 +29,7 @@ public class GoodObjects : MonoBehaviour {
 		Destroy(go,1f);
 		StartCoroutine( DecreaseScaleThenDie() );
 		if(levelManager.level.levelType == LevelType.HISTORY){
-			playerController.GanharRendimento(GetComponent<FlyingObjects>().damage/4);
+			playerController.GanharRendimento(GetComponent<FlyingObjects>().damage);
 		}
 	}
 	private IEnumerator DecreaseScaleThenDie(){

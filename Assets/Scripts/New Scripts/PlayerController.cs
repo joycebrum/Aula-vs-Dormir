@@ -164,7 +164,10 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator RendimentoLoop(){
         var lManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         while(lManager.tempoRestante >= 0){
-            PerderRendimento();
+            if(lManager.level.levelType != LevelType.HISTORY)
+            {
+                PerderRendimento();
+            }
             yield return new WaitForSeconds(0.1f);
         }
         if(rendimento>rendMinimo)
