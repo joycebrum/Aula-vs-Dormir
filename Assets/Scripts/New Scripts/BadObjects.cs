@@ -18,7 +18,7 @@ public class BadObjects : MonoBehaviour {
         var g = Instantiate(wrong,transform.position,Quaternion.Euler(0,0,45));
 		Destroy(g,1f);
 
-        playerController.PerderRendimento();
+        playerController.PerderRendimento(GetComponent<FlyingObjects>().damage);
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0;
         var go = Instantiate(badClick,pos,Quaternion.identity);

@@ -83,6 +83,7 @@ public class LevelManager : MonoBehaviour {
                 if (currentTime > 0 && playerController.rendimento < target) return true;
                 else if (playerController.rendimento >= target)// se for retornar false, ve se ganhou ou perdeu
                 {
+                    UpdateSceaneScript.updates++;
                     HistoryScript.position = 3;//mostra texto de vitoria
                 }
                 else
@@ -94,6 +95,7 @@ public class LevelManager : MonoBehaviour {
                 if (currentTime > 0 && playerController.rendimento > 0) return true;
                 else if(playerController.rendimento > 0)// se for retornar false, ve se ganhou ou perdeu
                 {
+                    UpdateSceaneScript.updates++;
                     HistoryScript.position = 1;//mostra texto de vitoria
                 }
                 else
@@ -105,7 +107,8 @@ public class LevelManager : MonoBehaviour {
                 if (currentTime > 0 && playerController.rendimento > 0) return true;
                 else if(playerController.rendimento > 0)
                 {
-                    HistoryScript.position = 1;
+                    UpdateSceaneScript.updates++;
+                    HistoryScript.position = 1; //mostra texto de vitória TODO: ainda é o mesmo texto da fase de ciencias
                 }
                 else
                 {
