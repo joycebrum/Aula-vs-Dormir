@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[CreateAssetMenu(menuName="PlayerAttributes")]
-public class PlayerAttributes : ScriptableObject {
-	[Header("Atributos")]
+[Serializable]
+public class PlayerAttributes  {
+    public string nome;
+    public int updates;
+
 	public int rendimentoInicial;
     public int rendimentoMaximo;
 	public int ganhoPorToque;

@@ -10,15 +10,19 @@ public class HistoryScript : MonoBehaviour {
     [SerializeField] private List<string> nextScene;
     public Text textElement;
     public static int position;
+    public static string textValue;
 	// Use this for initialization
 	void Start ()
     {
-        textElement.text = textList[position];  
+        textElement.text = textValue;  
 	}
 
     // Update is called once per frame
-    private void OnMouseDown()
+    private void Update()
     {
-        SceneManager.LoadScene(nextScene[position]);
+        if (Input.touchCount > 0)
+        {
+            SceneManager.LoadScene(nextScene[position]);
+        }
     }
 }

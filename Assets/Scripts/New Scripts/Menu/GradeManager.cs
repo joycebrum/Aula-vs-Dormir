@@ -11,6 +11,7 @@ public class GradeManager : MonoBehaviour {
     [Header("Importants")]
     public static string gradeDataSave = "gradeSave";
     public static string finalTestDataSave = "finalTestSave";
+    public static string currentSemesterDataSave = "currentSemester";
 
 	[HideInInspector]
     public float[,] grade = new float[semesterTotal,3];
@@ -31,29 +32,24 @@ public class GradeManager : MonoBehaviour {
 
     public List<GameObject> classBox;
     public GameObject finalTestBox;
-
-    private string errorGrade;
-
+    public Text bPlayText;
+    public Text bUpdateText;
+    
     private void Start()
     {
-        //BUILD ERRORGRADE
-        InitializeGrade();
-        grade[0, 0] = 4.3f;
-        grade[0, 1] = 5.3f;
-        //grade[0, 2] = 1.1f;
-        errorGrade = JsonUtility.ToJson(grade);
-        
+        //UpdateText
+        this.bUpdateText.text = "Upgrade (" + PlayerController.GetPlayerAttributes().updates + ")";
+        PlayerController.LoadPlayerAttributes();        
         //INIT
         grade = GradeManager.LoadGrade();
         finalTest = GradeManager.LoadFinalTest();
-
+        SaveData(grade, finalTest);
+       
         StartUiObjects();
     }
     public static void SaveData(float[,] grade, float[] finalTest)
     {
         string s;
-        print(grade);
-        print(grade[0, 2]);
         s = JsonConvert.SerializeObject(grade);
         PlayerPrefs.SetString(gradeDataSave,s);
         s = JsonConvert.SerializeObject(finalTest);
@@ -62,15 +58,44 @@ public class GradeManager : MonoBehaviour {
     }
     public static float[,] LoadGrade()
     {
-        return JsonConvert.DeserializeObject<float[,]>(PlayerPrefs.GetString(gradeDataSave));
+        if(PlayerPrefs.HasKey(gradeDataSave))
+        {
+            return JsonConvert.DeserializeObject<float[,]>(PlayerPrefs.GetString(gradeDataSave));
+        }
+        else
+        {
+            float[,] gradeLocal = new float[semesterTotal, 3];
+            for(int i = 0; i < semesterTotal; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    gradeLocal[i, j] = -1f;
+                }
+            }
+
+            return gradeLocal;
+        }
     }
     public static float[] LoadFinalTest()
     {
-        return JsonConvert.DeserializeObject<float[]>(PlayerPrefs.GetString(finalTestDataSave));
+        if (PlayerPrefs.HasKey(finalTestDataSave))
+        {
+            return JsonConvert.DeserializeObject<float[]>(PlayerPrefs.GetString(finalTestDataSave));
+        }
+        else
+        {
+            float[] finalTestLocal = new float[semesterTotal];
+            for(int i = 0; i < semesterTotal; i++)
+            {
+                finalTestLocal[i] = -1f;
+            }
+            return finalTestLocal;
+        }
+        
     }
     public int GetCurrentSemester()
     {
-        return PlayerPrefs.GetInt("currentSemester", 1);
+        return PlayerPrefs.GetInt(currentSemesterDataSave, 1);
     }
     public int GetCurrentTest(int semester)
     {
@@ -85,14 +110,15 @@ public class GradeManager : MonoBehaviour {
     }
     public void StartUiObjects()
     {
-        charName.text = "Joyce Brum";
+        charName.text = PlayerController.playerAttributes.nome;
         charSemester.text = GetCurrentSemester().ToString() + "º Semestre";
-        crSoFar.text = GetAverage(GetCurrentSemester()-1).ToString();
+        crSoFar.text = GetAverage(GetCurrentSemester()-1).ToString("F2");
         //Class Grid
         CreateClassGrid();
     }
     public void CreateClassGrid()
     {
+
         string[] names = { "Matematica", "História", "Ciências" };
         int i = 0;
         int current = GetCurrentTest(GetCurrentSemester() - 1);
@@ -104,32 +130,30 @@ public class GradeManager : MonoBehaviour {
             temp.transform.DOScale(new Vector3(0, 0, 0), 0);
             temp.transform.DOScale(targetScale, 0.5f);
             temp.transform.GetChild(0).GetComponent<Text>().text = names[i];
-            temp.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = grade[GetCurrentSemester()-1,i].ToString();
+            if(grade[GetCurrentSemester() - 1, i] == -1)
+            {
+                temp.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = "??";
+            } else
+            {
+                temp.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = grade[GetCurrentSemester()-1,i].ToString();
+            }
+            
         }
         if(current == 3)
         {
             if(GetAverage(GetCurrentSemester() - 1) < 5.0)
             {
                 ShowFinalTest(GetCurrentSemester() - 1);
-                if (finalTest[GetCurrentSemester()-1] != -1 && GetAverageWithFinalTest(GetCurrentSemester()-1) < 5.0)
+                this.bPlayText.text = "JOGAR";
+                if (finalTest[GetCurrentSemester()-1] != -1)
                 {
-                    print("REPROVADO");
-                    ResetSemester();
-                    SceneManager.LoadScene("MenuDeFases");
-                }
-                else if(finalTest[GetCurrentSemester() - 1] != -1)
-                {
-                    print("PASSAR DE SEMESTRE COM FINAL");
-                    NextSemester();
-                    SceneManager.LoadScene("MenuDeFases");
+                    this.bPlayText.text = GetCurrentSemester() < 8 ? "Próximo Semestre" : "Resetar o Jogo";
                 }
             }
             else
             {
-                finalTest[GetCurrentSemester() - 1] = 0;
-                print("PASSAR DE SEMESTRE");
-                NextSemester();
-                SceneManager.LoadScene("MenuDeFases");
+                this.bPlayText.text = "Próximo Semestre";
+                finalTest[GetCurrentSemester() - 1] = -1;
             }
         }
     }
@@ -146,17 +170,6 @@ public class GradeManager : MonoBehaviour {
     {
         if (GradeManager.LoadFinalTest()[semester] == -1) return 0;
         return (GetAverage(semester) + GradeManager.LoadFinalTest()[semester]) / 2;
-    }
-    public void InitializeGrade()
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < semesterTotal; j++)
-            {
-                grade[j,i] = -1;
-            }
-            finalTest[i] = -1;
-        }
     }
     public void ShowFinalTest(int semester)
     {
@@ -195,25 +208,28 @@ public class GradeManager : MonoBehaviour {
     {
 
         int test = GetCurrentTest(GetCurrentSemester() - 1);
-        if (test < 3)
+        if (test <= 3 && this.bPlayText.text.CompareTo("JOGAR") == 0)
         {
-            print("AULA DE " + (LevelType)test);
+            menu.interactable = false;
             levelManager.transform.parent.gameObject.SetActive(true);
             menu.DOFade(0, 1f);
             levelManager.InitLevelFromIndex(test);
             levelManager.currentSemester = GetCurrentSemester() - 1;
             levelManager.currentTest = GetCurrentTest(GetCurrentSemester() - 1);
             StartCoroutine(levelManager.LevelLoop());
-        }
+        } 
         else
         {
-            print("PF");
-            levelManager.transform.parent.gameObject.SetActive(true);
-            menu.DOFade(0, 1f);
-            levelManager.InitLevelFromIndex(test);
-            levelManager.currentSemester = GetCurrentSemester() - 1;
-            levelManager.currentTest = GetCurrentTest(GetCurrentSemester() - 1);
-            StartCoroutine(levelManager.LevelLoop());
+            if(GetCurrentSemester() < 8)
+            {
+                NextSemester();
+                SceneManager.LoadScene("MenuDeFases");
+            }
+            else
+            {
+                GradeHistory.resetAllSemesters();
+                PlayerController.ResetPlayerAttributes();
+            }
         }
     }
 }

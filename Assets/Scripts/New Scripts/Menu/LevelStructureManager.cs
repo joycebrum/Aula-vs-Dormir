@@ -86,7 +86,7 @@ public class LevelStructureManager : MonoBehaviour {
 	}
     private IEnumerator StartNewLevel(int i)
     {
-        var go = Instantiate(levelPrefab);
+        Instantiate(levelPrefab);
         yield return new WaitForEndOfFrame();
         GameObject.Find("LevelManager").GetComponent<LevelManager>().InitLevel(levelTypes[i]);
         menu.SetActive(false);

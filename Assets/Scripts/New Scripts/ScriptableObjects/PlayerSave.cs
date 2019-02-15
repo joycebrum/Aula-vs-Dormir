@@ -8,5 +8,5 @@ public class PlayerSave : ScriptableObject {
 	public List<SemesterOverview> semesters;
 }
 public enum LevelType{
-	MATHMATIC,HISTORY,SCIENCE
+	MATHMATIC,HISTORY,SCIENCE,FINAL
 }

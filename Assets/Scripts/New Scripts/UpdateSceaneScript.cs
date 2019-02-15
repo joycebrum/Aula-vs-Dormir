@@ -6,108 +6,114 @@ using UnityEngine.SceneManagement;
 
 public class UpdateSceaneScript : MonoBehaviour {
 
-    public PlayerAttributes playerAttributes;
+    [Header("UI elements")]
     public Text[] texto;
-    public static int updates=0;
     public Text numUpdates;
     public Button[] botao;
-    private int updatesantigo;
+
 	// Use this for initialization
 	void Start ()
     {
-        texto[0].text = "Valor do Toque: " + playerAttributes.ganhoPorToque.ToString();
-        texto[1].text = "Rendimento por água: " + playerAttributes.rendimentoPorAgua.ToString();
-        texto[2].text = "Duracao banheiro: " + playerAttributes.duracaoBanheiro.ToString() + " segundos";
-        texto[3].text = "Aguas: " + playerAttributes.passesAgua.ToString();
-        texto[4].text = "Passes: " + playerAttributes.passesBanheiro.ToString();
-        numUpdates.text = "Upgrades possíveis = " + updates.ToString();
-        updatesantigo = updates;
+        startUI();
 	}
-
+    private void startUI()
+    {
+        texto[0].text = "Valor do Toque: " + PlayerController.GetPlayerAttributes().ganhoPorToque.ToString();
+        texto[1].text = "Rendimento por água: " + PlayerController.GetPlayerAttributes().rendimentoPorAgua.ToString();
+        texto[2].text = "Duracao banheiro: " + PlayerController.GetPlayerAttributes().duracaoBanheiro.ToString() + " segundos";
+        texto[3].text = "Aguas: " + PlayerController.GetPlayerAttributes().passesAgua.ToString();
+        texto[4].text = "Passes: " + PlayerController.GetPlayerAttributes().passesBanheiro.ToString();
+        numUpdates.text = "Upgrades possíveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+    }
     public void UpdateAgua()
     {
-        if (updates > 0)
+        if (PlayerController.GetPlayerAttributes().updates > 0)
         {
-            playerAttributes.rendimentoPorAgua += 1;
-            updates--;
-            numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
-            texto[1].text = "Rendimento por água: " + playerAttributes.rendimentoPorAgua.ToString();
-            if (updates == 0)
+            PlayerController.playerAttributes.rendimentoPorAgua += 1;
+            PlayerController.GetPlayerAttributes().updates--;
+            numUpdates.text = "Updates possiveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+            texto[1].text = "Rendimento por água: " + PlayerController.playerAttributes.rendimentoPorAgua.ToString();
+            if (PlayerController.GetPlayerAttributes().updates == 0)
             {
                 for (int i = 0; i < botao.Length; i++)
                 {
                     botao[i].interactable = false;
                 }
             }
+            PlayerController.SavePlayerAttributes();
         }
     }
     public void UpdateLavar()
     {
-        if (updates > 0)
+        if (PlayerController.GetPlayerAttributes().updates > 0)
         {
-            playerAttributes.duracaoBanheiro += 0.5f;
-            updates--;
-            numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
-            texto[2].text = "Duracao banheiro: " + playerAttributes.duracaoBanheiro.ToString() + " segundos";
-            if (updates == 0)
+            PlayerController.playerAttributes.duracaoBanheiro += 0.5f;
+            PlayerController.GetPlayerAttributes().updates--;
+            numUpdates.text = "Updates possiveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+            texto[2].text = "Duracao banheiro: " + PlayerController.playerAttributes.duracaoBanheiro.ToString() + " segundos";
+            if (PlayerController.GetPlayerAttributes().updates == 0)
             {
                 for (int i = 0; i < botao.Length; i++)
                 {
                     botao[i].interactable = false;
                 }
             }
+            PlayerController.SavePlayerAttributes();
         }
 
     }
     public void UpdateGanho()
     {
-        if (updates > 0)
+        if (PlayerController.GetPlayerAttributes().updates > 0)
         {
-            playerAttributes.ganhoPorToque++;
-            updates--;
-            numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
-            texto[0].text = "Valor do Toque: " + playerAttributes.ganhoPorToque.ToString();
-            if (updates == 0)
+            PlayerController.playerAttributes.ganhoPorToque++;
+            PlayerController.GetPlayerAttributes().updates--;
+            numUpdates.text = "Updates possiveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+            texto[0].text = "Valor do Toque: " + PlayerController.playerAttributes.ganhoPorToque.ToString();
+            if (PlayerController.GetPlayerAttributes().updates == 0)
             {
                 for (int i = 0; i < botao.Length; i++)
                 {
                     botao[i].interactable = false;
                 }
             }
+            PlayerController.SavePlayerAttributes();
         }
     }
     public void ComprarAgua()
     {
-        if (updates > 0)
+        if (PlayerController.GetPlayerAttributes().updates > 0)
         {
-            playerAttributes.passesAgua++;
-            updates--;
-            numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
-            texto[3].text = "Aguas: " + playerAttributes.passesAgua.ToString();
-            if (updates == 0)
+            PlayerController.playerAttributes.passesAgua++;
+            PlayerController.GetPlayerAttributes().updates--;
+            numUpdates.text = "Updates possiveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+            texto[3].text = "Aguas: " + PlayerController.playerAttributes.passesAgua.ToString();
+            if (PlayerController.GetPlayerAttributes().updates == 0)
             {
                 for (int i = 0; i < botao.Length; i++)
                 {
                     botao[i].interactable = false;
                 }
             }
+            PlayerController.SavePlayerAttributes();
         }
     }
     public void Passesprobanheiro()
     {
-        if (updates > 0)
+        if (PlayerController.GetPlayerAttributes().updates > 0)
         {
-            playerAttributes.passesBanheiro++;
-            updates--;
-            numUpdates.text = "Updates possiveis = " + UpdateSceaneScript.updates.ToString();
-            texto[4].text = "Passes: " + playerAttributes.passesBanheiro.ToString();
-            if (updates == 0)
+            PlayerController.playerAttributes.passesBanheiro++;
+            PlayerController.GetPlayerAttributes().updates--;
+            numUpdates.text = "Updates possiveis = " + PlayerController.GetPlayerAttributes().updates.ToString();
+            texto[4].text = "Passes: " + PlayerController.playerAttributes.passesBanheiro.ToString();
+            if (PlayerController.GetPlayerAttributes().updates == 0)
             {
                 for (int i = 0; i < botao.Length; i++)
                 {
                     botao[i].interactable = false;
                 }
             }
+            PlayerController.SavePlayerAttributes();
         }
     }
     public void Sair(string name)

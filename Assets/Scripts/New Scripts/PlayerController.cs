@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class PlayerController : MonoBehaviour {
 
-    public PlayerAttributes playerAttributes;
+    public static PlayerAttributes playerAttributes;
+
     public GameObject Parent;
     public ObjectCreator cafeCreat;
     private ObjectCreator objCreat;
     public int rendimento;
-    [SerializeField] private int rendMinimo = 75;
+    [SerializeField] public int rendMinimo = 75;
     //[SerializeField] private List<GameObject> FlyingPrefabes;
     [Header("Elementos da UI")]
     [SerializeField] private Image rendimentoImg;
@@ -24,26 +28,31 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private SpriteRenderer PlayerSprite;
 
     //Campos relacionados ao efeito cafe
-    [SerializeField] private int valorCoffee;
-    [SerializeField] private float velocidadeItens;//velocidade que os itens recebem ao receber o efeito negativo
+    private int valorCoffee;
+    private float velocidadeItens;//velocidade que os itens recebem ao receber o efeito negativo
+    private float velocidadeExtraParaItens;
     [SerializeField] private Text textCafe;
     [SerializeField] private Text textEfeitoCafe;
     [SerializeField] private Text textEfeitoCafeQuant;
+
+    public static string playerSaveDataFile = "/playerAttributes.dat";
 
     private int CountCafe;
     public bool coffeeEffect;
     private bool GoodEffect;
 
     private void Start() {
+        velocidadeItens = 0f;
+        velocidadeExtraParaItens = 0f;
         coffeeEffect = false;
         CountCafe = 0;
         GoodEffect = false;
         objCreat = GameObject.Find("ObjCreator_Bom").GetComponent<ObjectCreator>();
-         PlayerSprite = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-        StartCoroutine(RendimentoLoop());
+        PlayerSprite = GameObject.Find("Player").GetComponent<SpriteRenderer>();
         UpdateRendimentoUI();
         UpdateSkillUI(bathroomSkillText, playerAttributes.passesBanheiro);
         UpdateSkillUI(waterSkillText, playerAttributes.passesAgua);
+        
     }
     public void PerderRendimento(int perda = 1) {
         rendimento -= perda;
@@ -67,45 +76,47 @@ public class PlayerController : MonoBehaviour {
     }
     public void UsarBanheiro() {
         if (playerAttributes.passesBanheiro <= 0) return;
-        playerAttributes.passesBanheiro--;
+        playerAttributes.passesBanheiro -= 1;
         UpdateSkillUI(bathroomSkillText, playerAttributes.passesBanheiro);
         StartCoroutine(SkillCooldown(bathroomSkillImg, playerAttributes.cooldownBanheiro));
         StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().StopCreatorForSeconds(playerAttributes.duracaoBanheiro));
     }
     public void UsarAgua() {
         if (playerAttributes.passesAgua <= 0) return;
-        playerAttributes.passesAgua--;
+        playerAttributes.passesAgua -= 1;
         GanharRendimento(playerAttributes.rendimentoPorAgua);
         UpdateSkillUI(waterSkillText, playerAttributes.passesAgua);
         StartCoroutine(SkillCooldown(waterSkillImg, playerAttributes.cooldownAgua));
     }
-    public void UsarCafe(int damage, int duracao)
+    public void UsarCafe(int damage, int duracao, int efeitonegativo, float velocidadeInicial)
     {
+        ObjectCreator.coffee = false;
         CountCafe++;
         textEfeitoCafe.text = "Toque + ";
         textEfeitoCafeQuant.text = "" + damage;
         textCafe.text = "" + CountCafe;
         valorCoffee = damage;
+        velocidadeItens = velocidadeInicial + velocidadeExtraParaItens;
         GoodEffect = true;
         coffeeEffect = true;
-        StartCoroutine(CoffeeCooldown(duracao));
+        StartCoroutine(CoffeeCooldown(duracao, efeitonegativo));
     }
     public void EfeitoNegativoCafe(int duracao)
     {
         textEfeitoCafe.text = "Velocidade + ";
         textEfeitoCafeQuant.text = "" + velocidadeItens;
-        objCreat.quant = velocidadeItens;
+        objCreat.valocidadeAMais = velocidadeItens;
         ChangeVelocity(velocidadeItens);
         StartCoroutine(CoffeeBadCooldown(duracao));
     }
     private IEnumerator CoffeeBadCooldown(int duracao)
     {
-        yield return new WaitForSeconds((int)duracao / 2);//espera metade do tempo
-        objCreat.quant = 0;
+        yield return new WaitForSeconds((int)duracao);//espera metade do tempo
+        objCreat.valocidadeAMais = 0;
         ChangeVelocity(-velocidadeItens);
         coffeeEffect = false;//acaba o efeito por completo e outro cafe ja pode ser tomado
-        cafeCreat.Coffee = false;
-        velocidadeItens += 1f;
+        velocidadeExtraParaItens += 1f;
+        ObjectCreator.coffee = true;
         textEfeitoCafe.text = "Sem Efeito";
         textEfeitoCafeQuant.text = "";
     }
@@ -119,11 +130,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
     
-    private IEnumerator CoffeeCooldown(int duracao)
+    private IEnumerator CoffeeCooldown(int duracao, int efeitonegativo)
     {
         yield return new WaitForSeconds(duracao);
         GoodEffect = false;//acabou apenas o efeito bom
-        EfeitoNegativoCafe(duracao);
+        EfeitoNegativoCafe(efeitonegativo);
     }
     private IEnumerator SkillCooldown(Image skillImg, float cooldown){
         Color usedColor = Color.gray;
@@ -169,18 +180,61 @@ public class PlayerController : MonoBehaviour {
             PlayerSprite.sprite = mySpriteList[4];
         }
     }
-    private IEnumerator RendimentoLoop(){
-        var lManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        while(lManager.tempoRestante >= 0){
-            if(lManager.level.levelType != LevelType.HISTORY)
-            {
-                PerderRendimento();
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
-        if(rendimento>rendMinimo)
+    public static PlayerAttributes GetPlayerAttributes()
+    {
+        if(PlayerController.playerAttributes == null)
         {
-            UpdateSceaneScript.updates++;
+            PlayerController.LoadPlayerAttributes();
+            return playerAttributes;
         }
+        else
+        {
+            return PlayerController.playerAttributes;
+        }
+    }
+    public static PlayerAttributes getPlayerAttributesInicial()
+    {
+        PlayerAttributes playerAttributes = new PlayerAttributes();
+        playerAttributes.nome = "";
+        playerAttributes.rendimentoInicial = 0;
+        playerAttributes.rendimentoMaximo = 100;
+        playerAttributes.ganhoPorToque = 2;
+        playerAttributes.cooldownAgua = 2;
+        playerAttributes.cooldownBanheiro = 5;
+        playerAttributes.duracaoBanheiro = 5;
+        playerAttributes.rendimentoPorAgua = 20;
+        playerAttributes.passesAgua = 5;
+        playerAttributes.passesBanheiro = 5;
+        return playerAttributes;
+    }
+
+    public static void SavePlayerAttributes()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + playerSaveDataFile);
+        bf.Serialize(file, playerAttributes);
+        file.Close();
+    }
+
+    public static void LoadPlayerAttributes()
+    {
+        if(File.Exists(Application.persistentDataPath + playerSaveDataFile))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + playerSaveDataFile, FileMode.Open);
+            playerAttributes = new PlayerAttributes();
+            playerAttributes = (PlayerAttributes)bf.Deserialize(file);
+            file.Close();
+        }
+        else
+        {
+            playerAttributes = getPlayerAttributesInicial();
+            SavePlayerAttributes();
+        }
+    }
+    public static void ResetPlayerAttributes()
+    {
+        playerAttributes = getPlayerAttributesInicial();
+        SavePlayerAttributes();
     }
 }

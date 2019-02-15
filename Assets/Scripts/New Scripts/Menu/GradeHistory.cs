@@ -26,7 +26,7 @@ public class GradeHistory : MonoBehaviour {
             t.transform.DOScale(new Vector3(0, 0, 0), 0);
             t.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
             float[] finalTest = GradeManager.LoadFinalTest();
-            if (finalTest[i] == 0)
+            if (finalTest[i] < 0)
             {
                 t.transform.GetChild(1).GetComponent<Text>().text = GradeManager.GetAverage(i).ToString();
             }
@@ -36,20 +36,9 @@ public class GradeHistory : MonoBehaviour {
             }
         }
     }
-    public void Reset()
+    public void ResetWithAnimation()
     {
-        float[,] grade = new float[semesterTotal,3];
-        float[] finalTest = new float[semesterTotal];
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < semesterTotal; j++)
-            {
-                grade[j, i] = -1;
-            }
-            finalTest[i] = -1;
-        }
-        GradeManager.SaveData(grade, finalTest);
-        PlayerPrefs.SetInt("currentSemester", 1);
+        GradeHistory.resetAllSemesters();
         StartCoroutine(ResetAnimation());
     }
     private IEnumerator ResetAnimation()
@@ -62,5 +51,22 @@ public class GradeHistory : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         oldSemesters = new List<GameObject>();
         StartUI();
+    }
+
+    public static void resetAllSemesters()
+    {
+        float[,] grade = new float[semesterTotal, 3];
+        float[] finalTest = new float[semesterTotal];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < semesterTotal; j++)
+            {
+                grade[j, i] = -1;
+            }
+            finalTest[i] = -1;
+        }
+        GradeManager.SaveData(grade, finalTest);
+        PlayerPrefs.SetInt(GradeManager.currentSemesterDataSave, 1);
+        PlayerPrefs.Save();
     }
 }
