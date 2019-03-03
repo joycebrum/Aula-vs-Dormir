@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Executaveis/Versão 3.0.9-android.apk
+C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Executaveis/Versão 3.0.11-android.apk
 SceneListBegin?
 Assets/Scenes/Menu/MainMenu.unity
 Assets/Scenes/Level.unity
@@ -11,7 +11,7 @@ Assets/Scenes/Menu/UpdateScene.unity
 Assets/Scenes/Menu/GradeHistory.unity
 Assets/Scenes/Menu/TutorialParte2.unity
 SceneListEnd?
-bde201d7e944c9fbc1a560c70bc213b3 Assembly-CSharp.dll:.LevelData
+235b5dd1b6229686ad2ed755cb682530 Assembly-CSharp.dll:.LevelData
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
 3fc19a4d9770b068b80b176e49fc4b94 Assembly-CSharp.dll:.LevelStructureManager

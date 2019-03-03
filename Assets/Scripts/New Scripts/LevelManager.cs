@@ -174,6 +174,9 @@ public class LevelManager : MonoBehaviour {
     {
         tutorialText.transform.DOScale(0f, 0);
         tutorialText.gameObject.SetActive(true);
+        tutorialText.transform.GetChild(0).GetComponent<Text>().text = level.tutorial;
+        tutorialText.transform.DOScale(1f, 0.5f);
+        yield return new WaitForSeconds(5f);
         tutorialText.transform.GetChild(0).GetComponent<Text>().text = level.description;
         tutorialText.transform.DOScale(1f, 0.5f);
         yield return new WaitForSeconds(4f);

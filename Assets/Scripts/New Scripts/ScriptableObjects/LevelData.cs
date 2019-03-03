@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject {
 	[Header("Geral")]
 	public LevelType levelType;
+    public string tutorial;
     public string description;
 
     public float initTime;
