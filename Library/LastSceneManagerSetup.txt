@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Menu/MenuDeFases.unity
+- path: Assets/Scenes/Menu/Tutorial.unity
   isLoaded: 1
   isActive: 1

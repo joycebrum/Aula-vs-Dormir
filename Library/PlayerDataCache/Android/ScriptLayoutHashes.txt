@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Executaveis/Versão 3.0.11-android.apk
+C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Executaveis/Versão 3.0.12-android.apk
 SceneListBegin?
 Assets/Scenes/Menu/MainMenu.unity
 Assets/Scenes/Level.unity
