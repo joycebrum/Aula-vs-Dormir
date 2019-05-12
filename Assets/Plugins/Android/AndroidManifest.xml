@@ -25,5 +25,4 @@
             <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
         </activity>
     </application>
-     <uses-permission android:name="android.permission.CALL_PHONE" android:maxSdkVersion="1" />
 </manifest>
