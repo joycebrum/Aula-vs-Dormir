@@ -25,6 +25,8 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
     - UnityEditor.Graphs.AnimatorControllerTool
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -87,7 +89,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 10272}
+      Script: {instanceID: 10270}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -148,7 +150,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9406}
     - Class: 114
-      Script: {instanceID: 10424}
+      Script: {instanceID: 10422}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -219,7 +221,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9838}
     - Class: 114
-      Script: {instanceID: 10242}
+      Script: {instanceID: 10240}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -306,9 +308,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10020}
     - Class: 114
-      Script: {instanceID: 10210}
+      Script: {instanceID: 10208}
     - Class: 114
-      Script: {instanceID: 10664}
+      Script: {instanceID: 10662}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -503,7 +505,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 10080}
+      Script: {instanceID: 10078}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -1123,12 +1125,6 @@ ScriptsOnlyBuild:
     className: GradeManager
   - hash:
       serializedVersion: 2
-      Hash: 787be1203fc3b5f65d1cd9d169f573ac
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerSettingMainMenu2
-  - hash:
-      serializedVersion: 2
       Hash: a24c6639afbe7a9f3bb902c1e16617bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1316,4 +1312,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Menu/Tutorial.unity
   - Assets/Scenes/Menu/TutorialParte2.unity
   - Assets/Scenes/Menu/UpdateScene.unity
-  playerPath: C:/Users/joyce/Aula vs Dormir 2019.1/Executaveis/versao 3.1.0.apk
+  playerPath: C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Executaveis/versao 3.1.2-app-bundle.aab
