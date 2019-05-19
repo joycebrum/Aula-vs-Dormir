@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D623732E-47B2-A983-C37D-4D2E2D3A4CA3}</ProjectGuid>
+    <ProjectGuid>{77E8CDDB-1CAE-4A03-DAF1-2D414EA5E4D8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -92,25 +92,25 @@
     <None Include="Assets\JsonDotNet\link.xml" />
     <None Include="Assets\Fontes\Terms of Use End User Lisence Agreement.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -290,28 +290,28 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Assets/Demigiant/DOTween/DOTween46.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Assets/Demigiant/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/joyce/Aula vs Dormir 2019.1/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/joyce/Documents/GitHub/Aula-vs-Dormir/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
