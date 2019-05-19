@@ -206,7 +206,7 @@ public class GradeManager : MonoBehaviour {
     //mexer aqui para abrir a fase final
     public void StartLevel()
     {
-
+        print(GetCurrentSemester());
         int test = GetCurrentTest(GetCurrentSemester() - 1);
         if (test <= 3 && this.bPlayText.text.CompareTo("JOGAR") == 0)
         {
@@ -229,6 +229,7 @@ public class GradeManager : MonoBehaviour {
             {
                 GradeHistory.resetAllSemesters();
                 PlayerController.ResetPlayerAttributes();
+                SceneManager.LoadScene("MenuDeFases");
             }
         }
     }

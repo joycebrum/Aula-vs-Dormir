@@ -339,28 +339,21 @@ public class LevelManager : MonoBehaviour {
     private float notaVitoriaPorTempo()
     {
         float time = tempoRestante - currentTime;
-        float medida = tempoRestante / 6;
-        if (time <= medida)
+        float medida = tempoRestante / 5;
+        if (time <= 2 * medida)
         {
             return 10.0f;
         }
-        else if (time < 2 * medida)
+        else if (time <= 3 * medida)
         {
             return 9.0f;
         }
-        else if (time < 3 * medida)
+        else if (time <= 4 * medida)
         {
             return 8.0f;
         }
-        else if (time < 4 * medida)
-        {
-            return 7.0f;
-        }
-        else if (time < 5 * medida)
-        {
-            return 6.0f;
-        }
-        return 5.0f;
+
+        return 7.0f;
     }
 
     private IEnumerator RendimentoLoop()
